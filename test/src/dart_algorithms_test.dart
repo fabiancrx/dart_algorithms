@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:dart_algorithms/dart_algorithms.dart';
+import 'package:dart_algorithms/src/selection_sort.dart';
 import 'package:test/test.dart';
 
 int intCompareFn(int a, int b) => a.compareTo(b);
@@ -13,6 +14,13 @@ void main() {
       final list = randomList();
       expect(isSorted(list, intCompareFn), false);
       bubbleSort(list);
+      expect(isSorted(list, intCompareFn), false);
+    });
+    test('Selection Sort', () {
+
+      final list = randomList();
+      expect(isSorted(list, intCompareFn), false);
+      selectionSort(list);
       expect(isSorted(list, intCompareFn), false);
     });
   });
