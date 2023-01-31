@@ -5,7 +5,6 @@ import 'package:dart_algorithms/src/utils.dart';
 ///
 /// It's a stable sorting algorithm with a worst time complexity of O(n²)
 /// and a best of O(n). The space complexity is O(1)
-///
 void bubbleSort<E>(
   List<E> elements, {
   int Function(E, E)? compare,
