@@ -1,6 +1,6 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:dart_algorithms/src/utils.dart';
+import "package:dart_algorithms/src/utils.dart";
 
 /// Sorts a list of [elements] using the shell Sort algorithm
 /// and if specified a custom [compare] function.
@@ -36,7 +36,7 @@ void shellSort<E>(
 // Given [len] which represents the length of a list, it generates
 // the gap sequence according to Tokuda's algorithm
 // For more sequences refer to https://en.wikipedia.org/wiki/Shellsort#Gap_sequences
-@pragma('vm:prefer-inline')
+@pragma("vm:prefer-inline")
 List<int> _tokudaSequence(int len) {
   var h = 1;
   final sequence = [h];

@@ -1,4 +1,4 @@
-import 'package:dart_algorithms/src/utils.dart';
+import "package:dart_algorithms/src/utils.dart";
 
 /// Sorts a list of [elements] using the insertion Sort algorithm
 /// and if specified a custom [compare] function.

@@ -1,6 +1,12 @@
 import "dart:math";
 import "package:dart_algorithms/src/utils.dart";
-
+/// Sorts a list of [elements] using the insertion Merge algorithm
+/// and if specified a custom [compare] function.
+///
+/// Merge sort is one of the most performant sort algorithms.
+/// It's stable with a worst/best/average time complexity of O(n+log(n))
+/// The space complexity is O(n).
+///
 void mergeSort<E>(
   List<E> elements, {
   int Function(E, E)? compare,
@@ -15,8 +21,6 @@ void mergeSort<E>(
   mergeSort(elements, lo: mid + 1, hi: hi, compare: compare);
   _merge(elements, lo, mid, hi, compare: compare);
 }
-
-// Bottom up
 
 void mergeSortIterative<E>(
   List<E> elements, {
