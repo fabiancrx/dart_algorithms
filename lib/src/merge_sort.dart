@@ -1,4 +1,5 @@
 import "dart:math";
+import "package:dart_algorithms/src/insertion_sort.dart";
 import "package:dart_algorithms/src/utils.dart";
 
 /// {@template merge_sort}
@@ -17,11 +18,18 @@ void mergeSort<E>(
 }) {
   hi ??= elements.length - 1;
   if (hi <= lo) return;
-  final mid = lo + (hi - lo) ~/ 2;
+  if (hi - lo < 10) {
+    // We fallback to insertion sort for small arrays, because:
+    // 1. Insertion sort is more efficient for small arrays.
+    // 2. Insertion sort is stable.
+    insertionSort(elements, compare: compare);
+  } else {
+    final mid = lo + (hi - lo) ~/ 2;
 
-  mergeSort(elements, lo: lo, hi: mid, compare: compare);
-  mergeSort(elements, lo: mid + 1, hi: hi, compare: compare);
-  _merge(elements, lo, mid, hi, compare: compare);
+    mergeSort(elements, lo: lo, hi: mid, compare: compare);
+    mergeSort(elements, lo: mid + 1, hi: hi, compare: compare);
+    _merge(elements, lo, mid, hi, compare: compare);
+  }
 }
 
 /// Iterative implementation of the Merge sort Algorithm
@@ -59,6 +67,8 @@ void _merge<E>(
   int Function(E, E)? compare,
 }) {
   compare ??= defaultCompare;
+  // If the last element of the left array is smaller than the first element of
+  // the right array then the two sub-arrays are sorted.
 
   if (compare(arr[mid], arr[mid + 1]) < 0) return;
 
@@ -69,8 +79,7 @@ void _merge<E>(
   final rightArray = List.generate(rightSize, (i) => arr[i + mid + 1]);
 
   for (var i = 0, j = 0, k = lo; k <= hi; k++) {
-    if ((i < leftSize) &&
-        (j >= rightSize || compare(leftArray[i], rightArray[j]) < 0)) {
+    if ((i < leftSize) && (j >= rightSize || compare(leftArray[i], rightArray[j]) < 0)) {
       arr[k] = leftArray[i];
       i++;
     } else {

@@ -62,7 +62,7 @@ void main() {
   });
 }
 
-List<int> randomList([int size = 12]) {
+List<int> randomList([int size = 1000]) {
   final random = Random();
   return [for (var i = 0; i < size; i++) random.nextInt(42)];
 }
