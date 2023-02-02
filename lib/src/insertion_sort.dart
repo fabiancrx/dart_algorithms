@@ -17,7 +17,7 @@ void insertionSort<E>(List<E> elements, {
 
   for (var i = 0; i < elements.length; i++) {
     var j = i;
-    while (j > 0 && compare(elements[j - 1], elements[j]) < 0) {
+    while (j > 0 && compare( elements[j],elements[j - 1]) <0) {
       elements.swap(j - 1, j);
       j--;
     }

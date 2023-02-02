@@ -8,6 +8,8 @@ import 'package:dart_algorithms/src/utils.dart';
 /// It's a unstable sorting algorithm with a worst time complexity of O(n*3/2)
 /// and a best of O(n*log(n)). The space complexity is O(1)
 ///
+// Its an improvement over insertion sort on large inputs
+//
 // Shellsort performs more operations than quicksort.
 // However, since it can be implemented using little code
 // It can be a good alternative for programmers in embedded environments
@@ -24,7 +26,7 @@ void shellSort<E>(
     final h = sequence.removeLast();
 
     for (var i = h; i < elements.length; i++) {
-      for (var j = i; j >= h && compare(elements[j - 1], elements[j]) < 0; j -= h) {
+      for (var j = i; j >= h && compare(elements[j],elements[j - 1], ) < 0; j -= h) {
         elements.swap(j, j - h);
       }
     }
