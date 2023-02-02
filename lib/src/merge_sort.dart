@@ -1,12 +1,14 @@
 import "dart:math";
 import "package:dart_algorithms/src/utils.dart";
-/// Sorts a list of [elements] using the insertion Merge algorithm
+
+/// {@template merge_sort}
+/// Sorts a list of [elements] using the MergeSort algorithm
 /// and if specified a custom [compare] function.
 ///
 /// Merge sort is one of the most performant sort algorithms.
 /// It's stable with a worst/best/average time complexity of O(n+log(n))
 /// The space complexity is O(n).
-///
+/// {@endtemplate}
 void mergeSort<E>(
   List<E> elements, {
   int Function(E, E)? compare,
@@ -22,6 +24,8 @@ void mergeSort<E>(
   _merge(elements, lo, mid, hi, compare: compare);
 }
 
+/// Iterative implementation of the Merge sort Algorithm
+/// {@macro dart_algorithms}
 void mergeSortIterative<E>(
   List<E> elements, {
   int Function(E, E)? compare,
@@ -48,7 +52,7 @@ void mergeSortIterative<E>(
 }
 
 void _merge<E>(
-  List<E> elements,
+  List<E> arr,
   int lo,
   int mid,
   int hi, {
@@ -56,20 +60,21 @@ void _merge<E>(
 }) {
   compare ??= defaultCompare;
 
-  if (compare(elements[mid], elements[mid + 1]) < 0) return;
+  if (compare(arr[mid], arr[mid + 1]) < 0) return;
 
   final leftSize = mid - lo + 1;
   final rightSize = hi - mid;
 
-  final leftArray = List.generate(leftSize, (index) => elements[index + lo]);
-  final rightArray = List.generate(rightSize, (index) => elements[index + mid + 1]);
+  final leftArray = List.generate(leftSize, (i) => arr[i + lo]);
+  final rightArray = List.generate(rightSize, (i) => arr[i + mid + 1]);
 
   for (var i = 0, j = 0, k = lo; k <= hi; k++) {
-    if ((i < leftSize) && (j >= rightSize || compare(leftArray[i], rightArray[j]) < 0)) {
-      elements[k] = leftArray[i];
+    if ((i < leftSize) &&
+        (j >= rightSize || compare(leftArray[i], rightArray[j]) < 0)) {
+      arr[k] = leftArray[i];
       i++;
     } else {
-      elements[k] = rightArray[j];
+      arr[k] = rightArray[j];
       j++;
     }
   }
