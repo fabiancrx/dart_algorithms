@@ -7,7 +7,7 @@ import "package:dart_algorithms/src/utils.dart";
 /// and if specified a custom [compare] function.
 ///
 /// Merge sort is one of the most performant sort algorithms.
-/// It's stable with a worst/best/average time complexity of O(n+log(n))
+/// It's stable with a worst/best/average time complexity of O(n*log(n))
 /// The space complexity is O(n).
 /// {@endtemplate}
 void mergeSort<E>(
@@ -17,12 +17,12 @@ void mergeSort<E>(
   int? hi,
 }) {
   hi ??= elements.length - 1;
-  if (hi <= lo) return;
-  if (hi - lo < 10) {
+  if (hi <= lo + 7) {
     // We fallback to insertion sort for small arrays, because:
     // 1. Insertion sort is more efficient for small arrays.
     // 2. Insertion sort is stable.
-    insertionSort(elements, compare: compare);
+    insertionSort(elements, compare: compare, lo: lo, hi: hi+1);
+    return;
   } else {
     final mid = lo + (hi - lo) ~/ 2;
 

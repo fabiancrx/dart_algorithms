@@ -3,6 +3,7 @@ import "dart:math";
 import "package:dart_algorithms/dart_algorithms.dart";
 import "package:dart_algorithms/src/insertion_sort.dart";
 import "package:dart_algorithms/src/merge_sort.dart";
+import "package:dart_algorithms/src/quick_sort.dart";
 import "package:dart_algorithms/src/selection_sort.dart";
 import "package:dart_algorithms/src/shell_sort.dart";
 import "package:test/test.dart";
@@ -59,6 +60,13 @@ void main() {
       mergeSortIterative(list);
       expect(isSorted(list, intCompareFn), true);
     });
+    test("Quick Sort ", () {
+      final list = randomList();
+      expect(isSorted(list, intCompareFn), false);
+      quickSort(list);
+      expect(isSorted(list, intCompareFn), true);
+    });
+
   });
 }
 

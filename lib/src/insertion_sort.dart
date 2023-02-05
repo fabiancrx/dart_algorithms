@@ -10,14 +10,18 @@ import "package:dart_algorithms/src/utils.dart";
 /// or if the array is sorted or partially sorted.
 // Because of the above you might see more advanced sorting algorithms switch
 // to insertion sort for small amount of elements or for partially sorted lists
-void insertionSort<E>(List<E> elements, {
+void insertionSort<E>(
+  List<E> elements, {
   int Function(E, E)? compare,
+  int lo = 0,
+  int? hi,
 }) {
   compare ??= defaultCompare;
+  hi ??= elements.length;
 
-  for (var i = 0; i < elements.length; i++) {
+  for (var i = lo; i < hi; i++) {
     var j = i;
-    while (j > 0 && compare( elements[j],elements[j - 1]) <0) {
+    while (j > 0 && compare(elements[j], elements[j - 1]) < 0) {
       elements.swap(j - 1, j);
       j--;
     }
