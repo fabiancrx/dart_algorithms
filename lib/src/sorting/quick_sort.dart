@@ -1,6 +1,6 @@
 import "dart:math";
 
-import "package:dart_algorithms/src/insertion_sort.dart";
+import 'package:dart_algorithms/src/sorting/insertion_sort.dart';
 import "package:dart_algorithms/src/utils.dart";
 
 void _quickSortSimple<E>(

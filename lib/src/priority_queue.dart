@@ -12,6 +12,8 @@ import "package:dart_algorithms/src/utils.dart";
 // - The largest/smallest key in a heap-ordered binary tree is found at the root.
 // A heap is a complete binary tree:
 // This means all levels are totally filled (except maybe the last level),
+//
+// If we limit the size of the heap to N, we could ob
 class PriorityQueue<E> {
   PriorityQueue([int Function(E, E)? comparison]) : comparator = comparison ?? defaultCompare;
 

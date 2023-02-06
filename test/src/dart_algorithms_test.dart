@@ -1,7 +1,6 @@
 import "dart:math";
 
 import "package:dart_algorithms/dart_algorithms.dart";
-import "package:dart_algorithms/src/heap_sort.dart";
 import "package:test/test.dart";
 
 int intCompareFn(int a, int b) => a.compareTo(b);

@@ -7,6 +7,9 @@ import "package:dart_algorithms/src/utils.dart";
 /// It's unstable with a worst/best/average time complexity of O(n*log(n))
 /// The space complexity is O(1).
 /// {@endtemplate}
+// It might be useful for embedded devices as its very compact to implement
+// Although is not very used in modern systems because poor cache performance.
+
 void heapSort<E>(List<E> elements, {
   int Function(E, E)? compare,
 }) {
