@@ -19,6 +19,7 @@ Most of the implementations in this repository can be further studied in the boo
 - [x] Shell Sort
 - [x] Merge Sort
 - [x] Quick Sort
+- [x] Heap Sort
 
 ### Data Structures
 

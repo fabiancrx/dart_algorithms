@@ -1,6 +1,7 @@
 import "dart:math";
 
 import "package:dart_algorithms/dart_algorithms.dart";
+import "package:dart_algorithms/src/heap_sort.dart";
 import "package:test/test.dart";
 
 int intCompareFn(int a, int b) => a.compareTo(b);
@@ -59,6 +60,12 @@ void main() {
       final list = randomList();
       expect(isSorted(list, intCompareFn), false);
       quickSort(list);
+      expect(isSorted(list, intCompareFn), true);
+    });
+    test("Heap Sort ", () {
+      final list = randomList();
+      expect(isSorted(list, intCompareFn), false);
+      heapSort(list);
       expect(isSorted(list, intCompareFn), true);
     });
   });
