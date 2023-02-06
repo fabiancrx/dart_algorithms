@@ -39,7 +39,7 @@ Most of the implementations in this repository can be further studied in the boo
 ### Algorithms
 
 - [ ] Binary Search
-- [ ] Quick Select
+- [x] Quick Select
 
 ## Installation 💻
 

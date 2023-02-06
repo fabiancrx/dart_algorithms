@@ -3,6 +3,8 @@ import "dart:math";
 import "package:dart_algorithms/src/sorting/insertion_sort.dart";
 import "package:dart_algorithms/src/utils.dart";
 
+part "../quick_select.dart";
+
 void _quickSortSimple<E>(
   List<E> elements, {
   int lo = 0,
