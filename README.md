@@ -21,9 +21,25 @@ Most of the implementations in this repository can be further studied in the boo
 - [x] Quick Sort
 - [x] Heap Sort
 
+| Algorithm        | Stable | In Place | Running time      | Extra space | Notes                            |
+|------------------|--------|----------|-------------------|-------------|----------------------------------|
+| Selection Sort   | no     | yes      | n²                | 1           |                                  |
+| Insertion sort   | yes    | yes      | n - n²            | 1           | Performs well if input is sorted |
+| Shell Sort       | no     | yes      | n*log(n)- n^(3/2) | 1           |                                  |
+| Quick Sort       | no     | yes      | n*log(n) - n²     | log(n)      | Unlikely to hit worst case       |
+| 3 Way Quick sort | no     | yes      | n - n*log(n)      | log(n)      | Depends on distribution of keys  |
+| Merge Sort       | yes    | no       | n*log(n)          | n           |                                  |
+| Heap Sort        | no     | yes      | n*log(n)          | 1           |                                  |
+
+
 ### Data Structures
 
 - [x] Priority Queue 
+
+### Algorithms
+
+- [ ] Binary Search
+- [ ] Quick Select
 
 ## Installation 💻
 
