@@ -1,11 +1,6 @@
 import "dart:math";
 
 import "package:dart_algorithms/dart_algorithms.dart";
-import "package:dart_algorithms/src/insertion_sort.dart";
-import "package:dart_algorithms/src/merge_sort.dart";
-import "package:dart_algorithms/src/quick_sort.dart";
-import "package:dart_algorithms/src/selection_sort.dart";
-import "package:dart_algorithms/src/shell_sort.dart";
 import "package:test/test.dart";
 
 int intCompareFn(int a, int b) => a.compareTo(b);
@@ -14,7 +9,7 @@ typedef SortFunction = void Function<E>(
   List<E> elements, {
   int Function(E, E)? compare,
 });
-
+// TODO (croxx5f): Add stability and different data distributions and types in the tests.
 void main() {
   test("isSorted helper function", () {
     final list = randomList();
@@ -66,7 +61,6 @@ void main() {
       quickSort(list);
       expect(isSorted(list, intCompareFn), true);
     });
-
   });
 }
 

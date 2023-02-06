@@ -4,7 +4,12 @@
 [![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
 [![License: MIT][license_badge]][license_link]
 
-A collection of Algorithms and Data structures implemented in dart.
+A collection of Algorithms and Data structures implemented in dart. 
+
+This repository is intended for educational purposes, you could probably find more optimized implementations of the data
+structures and algorithms here described in the standard library or in the [collections][https://pub.dev/packages/collection] package.
+
+Most of the implementations in this repository can be further studied in the book [Algorithms 4th edition][https://algs4.cs.princeton.edu/home/] .
 
 ### Sorting
 
@@ -12,6 +17,12 @@ A collection of Algorithms and Data structures implemented in dart.
 - [x] Selection Sort
 - [x] Insertion Sort
 - [x] Shell Sort
+- [x] Merge Sort
+- [x] Quick Sort
+
+### Data Structures
+
+- [x] Priority Queue 
 
 ## Installation 💻
 
