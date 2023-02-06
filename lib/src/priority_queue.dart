@@ -32,6 +32,7 @@ class PriorityQueue<E> {
     _data.add(item);
     if (size > 1) _bubbleUp(size - 1);
   }
+
   /// Returns the smallest/largest element without removing it in O(1)
   E get peek => _data[0]!;
 
@@ -60,24 +61,22 @@ class PriorityQueue<E> {
 
 // Also known as topDown/sink
   void _bubbleDown(int index) {
-    final parent = _elementAt(index);
     final li = _getLeftChildIndex(index);
     final ri = _getRightChildIndex(index);
 
-    int? swapIndex;
+    var swap = index;
 
-    if (_indexExists(li) && comparator(_elementAt(li), parent) < 0) {
-      swapIndex = li;
-    }
-    // If the right child exists it should be less than the left one in order
-    // to swap
-    if (_indexExists(ri) && comparator(_elementAt(ri), _elementAt(li)) < 0) {
-      swapIndex = ri;
+    if (_indexExists(li) && comparator(_elementAt(li), _elementAt(swap)) < 0) {
+      swap = li;
     }
 
-    if (swapIndex != null) {
-      _data.swap(index, swapIndex);
-      _bubbleDown(swapIndex);
+    if (_indexExists(ri) && comparator(_elementAt(ri), _elementAt(swap)) < 0) {
+      swap = ri;
+    }
+
+    if (swap != index) {
+      _data.swap(index, swap);
+      _bubbleDown(swap);
     }
   }
 

@@ -13,11 +13,16 @@ void heapSort<E>(List<E> elements, {
   if (elements.isEmpty) return;
 
   final len = elements.length;
-
+// We construct the heap, as we are bubbling down/sink we need to start from the last parent
+  // at index (len ~/ 2) - 1 up to the root, this way we ensure we are constructing a max heap.
   for (var i = (len ~/ 2) - 1; i >= 0; i--) {
     _sink(elements, i, len - 1);
   }
-
+// We swap the maximum element which is at the current root to the last position
+// of the array. And then we "shrink" the array by 1 by reducing [end].
+// This way we effectively move the larger elements to the end of the array.
+// And keep calling sink to maintain the heap invariant.
+// See https://algs4.cs.princeton.edu/25applications/ for a more graphical explanation.
   for (var end = len - 1; end > 0; end--) {
     elements.swap(0, end);
     _sink(elements, 0, end, compare: compare);
@@ -53,8 +58,7 @@ void _sink<E>(List<E> arr,
   if (indexExists(li) && compare(elementAt(li), elementAt(swapIndex)) > 0) {
     swapIndex = li;
   }
-// If the right child exists it should be less than the left one in order
-// to swap
+
   if (indexExists(ri) && compare(elementAt(ri), elementAt(swapIndex)) > 0) {
     swapIndex = ri;
   }
