@@ -13,6 +13,8 @@ void main() {
     expect(binarySearch(<int>[], 42), -1);
 
     expect(
-        () => binarySearch([1, 3, 9, 0], 42), throwsA(isA<AssertionError>()));
+      () => binarySearch([1, 3, 9, 0], 42),
+      throwsA(isA<AssertionError>()),
+    );
   });
 }

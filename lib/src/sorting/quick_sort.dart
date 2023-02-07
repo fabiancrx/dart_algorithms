@@ -78,7 +78,10 @@ void quickSort<E>(
   compare ??= defaultCompare;
   random ??= Random();
 
-  var lt = lo, i = lo + 1, gt = hi;
+  var lt = lo;
+  var i = lo + 1;
+  var gt = hi;
+
   final p = random.nextInt(hi - lo) + lo;
   elements.swap(p, lo);
 

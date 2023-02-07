@@ -33,7 +33,7 @@ void main() {
       expect(heap.size, 0);
     });
     test("Max PriorityQueue inserts and removes", () {
-      maxCompare(int a, int b) => b.compareTo(a);
+      int maxCompare(int a, int b) => b.compareTo(a);
       final heap = PriorityQueue<int>(maxCompare);
 
       expect(heap.size, 0);

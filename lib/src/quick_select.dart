@@ -1,3 +1,5 @@
+// ignore_for_file: require_trailing_commas
+
 part of "sorting/quick_sort.dart";
 
 /// Selection Algorithm that finds the [k]th element on an unsorted [arr].
