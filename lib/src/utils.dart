@@ -10,3 +10,11 @@ extension IterableSwapX<T> on List<T> {
     this[indexB] = temp;
   }
 }
+
+/// Greatest common divisor
+int gcd(int a, int b) => b == 0 ? a : gcd(b, a % b);
+
+/// Least common multiple
+int lcm(int a, int b) => a * b ~/ gcd(a, b);
+
+
