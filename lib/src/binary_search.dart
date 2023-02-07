@@ -25,7 +25,8 @@ int binarySearch<E extends Comparable<dynamic>>(Iterable<E> elements, E item) {
 
 bool _isSortedAscending<E extends Comparable<dynamic>>(Iterable<E> elements) {
   for (var i = 1; i < elements.length; i++) {
-    if (elements.elementAt(i - 1).compareTo(elements.elementAt(i)) > 0) return false;
+    if (elements.elementAt(i - 1).compareTo(elements.elementAt(i)) > 0)
+      return false;
   }
   return true;
 }

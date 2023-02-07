@@ -26,7 +26,14 @@ void shellSort<E>(
     final h = sequence.removeLast();
 
     for (var i = h; i < elements.length; i++) {
-      for (var j = i; j >= h && compare(elements[j],elements[j - 1], ) < 0; j -= h) {
+      for (var j = i;
+          j >= h &&
+              compare(
+                    elements[j],
+                    elements[j - 1],
+                  ) <
+                  0;
+          j -= h) {
         elements.swap(j, j - h);
       }
     }

@@ -21,7 +21,7 @@ void mergeSort<E>(
     // We fallback to insertion sort for small arrays, because:
     // 1. Insertion sort is more efficient for small arrays.
     // 2. Insertion sort is stable.
-    insertionSort(elements, compare: compare, lo: lo, hi: hi+1);
+    insertionSort(elements, compare: compare, lo: lo, hi: hi + 1);
     return;
   } else {
     final mid = lo + (hi - lo) ~/ 2;
@@ -79,7 +79,8 @@ void _merge<E>(
   final rightArray = List.generate(rightSize, (i) => arr[i + mid + 1]);
 
   for (var i = 0, j = 0, k = lo; k <= hi; k++) {
-    if ((i < leftSize) && (j >= rightSize || compare(leftArray[i], rightArray[j]) < 0)) {
+    if ((i < leftSize) &&
+        (j >= rightSize || compare(leftArray[i], rightArray[j]) < 0)) {
       arr[k] = leftArray[i];
       i++;
     } else {

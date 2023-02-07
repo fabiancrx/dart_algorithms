@@ -15,7 +15,8 @@ import "package:dart_algorithms/src/utils.dart";
 //
 // If we limit the size of the heap to N, we could ob
 class PriorityQueue<E> {
-  PriorityQueue([int Function(E, E)? comparison]) : comparator = comparison ?? defaultCompare;
+  PriorityQueue([int Function(E, E)? comparison])
+      : comparator = comparison ?? defaultCompare;
 
   final Comparator<E> comparator;
   final List<E?> _data = [];
@@ -55,7 +56,10 @@ class PriorityQueue<E> {
 // Also known as heapify/bottomUp/swim
   void _bubbleUp(int index) {
     var currentIndex = index;
-    while (currentIndex > 0 && comparator(_elementAt(currentIndex), _elementAt(_getParentIndex(currentIndex))) < 0) {
+    while (currentIndex > 0 &&
+        comparator(_elementAt(currentIndex),
+                _elementAt(_getParentIndex(currentIndex))) <
+            0) {
       _data.swap(currentIndex, _getParentIndex(currentIndex));
       currentIndex = _getParentIndex(currentIndex);
     }

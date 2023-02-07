@@ -1,4 +1,5 @@
 import "package:dart_algorithms/src/utils.dart";
+
 /// {@template heap_sort}
 /// Sorts a list of [elements] using the Heap Sort algorithm
 /// and if specified a custom [compare] function.
@@ -10,7 +11,8 @@ import "package:dart_algorithms/src/utils.dart";
 // It might be useful for embedded devices as its very compact to implement
 // Although is not very used in modern systems because poor cache performance.
 
-void heapSort<E>(List<E> elements, {
+void heapSort<E>(
+  List<E> elements, {
   int Function(E, E)? compare,
 }) {
   if (elements.isEmpty) return;
@@ -32,11 +34,12 @@ void heapSort<E>(List<E> elements, {
   }
 }
 
-void _sink<E>(List<E> arr,
-    int index,
-    int len, {
-      int Function(E, E)? compare,
-    }) {
+void _sink<E>(
+  List<E> arr,
+  int index,
+  int len, {
+  int Function(E, E)? compare,
+}) {
   compare ??= defaultCompare;
 
   E elementAt(int index) => arr[index] ?? (null as E);
