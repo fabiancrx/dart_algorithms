@@ -47,8 +47,8 @@ class UnionFind<T> {
     // Now we compress the paths by making each node a direct child
     // of the root node. We iterate from 0 to length-1 because the last node
     // is already a direct child of the root node
-    for (var i = 0; i < transient.length; i++) {
-      _components[node] = root;
+    while (transient.isNotEmpty) {
+      _components[transient.removeAt(0)] = root;
     }
 
     return root;

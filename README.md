@@ -35,10 +35,12 @@ Most of the implementations in this repository can be further studied in the boo
 ### Data Structures
 
 - [x] Priority Queue 
+- [x] Union Find
+- [ ] Binary Search Tree
 
 ### Algorithms
 
-- [ ] Binary Search
+- [x] Binary Search
 - [x] Quick Select
 
 ## Installation 💻
