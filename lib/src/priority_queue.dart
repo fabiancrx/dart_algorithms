@@ -36,7 +36,10 @@ class PriorityQueue<E> {
   }
 
   /// Returns the smallest/largest element without removing it in O(1)
-  E get peek => _data[0]!;
+  E get peek {
+    if (_data.isEmpty) throw StateError("No element");
+    return _data[0]!;
+  }
 
   /// Removes the largest/smallest key off the top of the priority Queue in O(log*n).
   /// It makes sure the invariants on the data structure are maintained.

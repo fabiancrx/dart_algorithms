@@ -62,5 +62,25 @@ void main() {
       expect(heap.remove(), 1);
       expect(heap.size, 0);
     });
+    test("Throws when peeked when empty", () {
+      final heap = PriorityQueue<int>();
+
+      expect(heap.size, 0);
+
+      heap
+        ..insert(69)
+        ..insert(5)
+        ..insert(3);
+
+      expect(heap.peek, 3);
+      heap
+        ..remove()
+        ..remove();
+      expect(heap.peek, 69);
+      heap.remove();
+
+      expect(() => heap.peek, throwsA(isA<StateError>()));
+      expect(heap.remove, throwsA(isA<StateError>()));
+    });
   });
 }

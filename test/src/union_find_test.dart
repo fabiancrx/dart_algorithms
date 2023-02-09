@@ -22,9 +22,11 @@ void main() {
 
     uf.union("I", "J");
     expect(uf.components, components.length - 5);
+
     uf.union("J", "G");
     expect(uf.components, components.length - 6);
     expect(uf.find("J"), uf.find("H"));
+    expect(uf.connected("H", "J"), true);
     uf.union("H", "F");
     expect(uf.components, components.length - 7);
     uf
