@@ -4,12 +4,14 @@
 [![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
 [![License: MIT][license_badge]][license_link]
 
-A collection of Algorithms and Data structures implemented in dart. 
+A collection of Algorithms and Data structures implemented in dart.
 
 This repository is intended for educational purposes, you could probably find more optimized implementations of the data
-structures and algorithms here described in the standard library or in the [collections][https://pub.dev/packages/collection] package.
+structures and algorithms here described in the standard library or in
+the [collections][https://pub.dev/packages/collection] package.
 
-Most of the implementations in this repository can be further studied in the book [Algorithms 4th edition][https://algs4.cs.princeton.edu/home/] .
+Most of the implementations in this repository can be further studied in the
+book [Algorithms 4th edition][https://algs4.cs.princeton.edu/home/] .
 
 ### Sorting
 
@@ -31,10 +33,9 @@ Most of the implementations in this repository can be further studied in the boo
 | Merge Sort       | yes    | no       | n*log(n)          | n           |                                  |
 | Heap Sort        | no     | yes      | n*log(n)          | 1           |                                  |
 
-
 ### Data Structures
 
-- [x] Priority Queue 
+- [x] Priority Queue
 - [x] Union Find
 - [ ] Binary Search Tree
 
@@ -45,8 +46,40 @@ Most of the implementations in this repository can be further studied in the boo
 
 ### Graphs
 
+#### Representations
+
+
+
+
+
+We represent graphs (most commonly) with adjacency matrices or adjacency lists.
+For any graph given v vertices and e edges:
+
+| Operation/Representation | Adjacency Matrix | Adjacency List | 
+|--------------------------|------------------|----------------|
+| Edge between v and w     | O(1)             | O(deg(v))      |
+| Neighbours               | O(v)             | O(deg(v))      |
+| Space required           | O(v²)            | O(v+e)         |
+| 3 Way Quick sort         | no               | yes            |
+| Merge Sort               | yes              | no             |
+| Heap Sort                | no               | yes            |
+
+Real-world graphs tend to be sparse
+
 - [ ] Depth First Search
 - [ ] Breadth First Search
+
+Path. Is there a path between s and t ?
+Shortest path. What is the shortest path between s and t ?
+Cycle. Is there a cycle in the graph?
+Euler tour. Is there a cycle that uses each edge exactly once?
+Hamilton tour. Is there a cycle that uses each vertex exactly once.
+Connectivity. Is there a way to connect all of the vertices?
+MST. What is the best way to connect all of the vertices?
+Biconnectivity. Is there a vertex whose removal disconnects the graph?
+Planarity. Can you draw the graph in the plane with no crossing edges
+Graph isomorphism. Do two adjacency lists represent the same graph?
+
 
 ---
 

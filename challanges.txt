@@ -1,0 +1,11 @@
+
+Flood fill
+
+Is a graph bipartite
+Find cycle
+Eulerian tour
+++ hard
+Tarjan algorithm (lay out graph without crossing edges)
+Hamiltonian cycle
+++ Fucking hard
+Isomorphism
