@@ -12,26 +12,42 @@ void main() {
     tinyG = fromInput(loadTestFile("tinyG.txt"));
     sample = fromInput(loadTestFile("sample.txt"));
   });
-  group("Graph", () {
-    test("Depth First Search", () {
-      expect(dfs(sample, 0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  group("Graph ", () {
+    group("Traversal ", () {
+      test("Depth First Search", () {
+        expect(dfs(sample, 0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        expect(dfs(tinyG, 0), [0, 5, 4, 3, 6, 1, 2]);
+        print(tinyG);
+      });
+      test("Breadth First Search", () {
+        expect(bfs(sample, 0), [0, 1, 4, 8, 2, 5, 7, 9, 3, 6]);
+        expect(bfs(tinyG, 0), [0, 5, 1, 2, 6, 4, 3]);
+      });
     });
-    test("Breadth First Search", () {
-      expect(bfs(sample, 0), [0, 1, 4, 8, 2, 5, 7, 9, 3, 6]);
-    });
-    test("Connected components", () {
-      final cc = ConnectedComponents(tinyG);
-      expect(cc.count, 3);
 
+    group("Connected components", () {
+      test("given a graph with 3 connected components they get correctly identified", () {
+        final cc = ConnectedComponents(tinyG);
+        expect(cc.count, 3);
 
-      // 6 5 4 3 2 1 0
-      // 8 7
-      // 12 11 10 9
-      expect(cc.connected(0, 6), true);
-      expect(cc.connected(0, 8), false);
-      expect(cc.connected(7, 11), false);
+        expect(cc.connected(0, 6), true);
+        expect(cc.componentId(5), 0);
+        expect(cc.component(0), unorderedEquals([0, 1, 2, 3, 4, 5, 6]));
+        expect(cc.component(7), unorderedEquals([7, 8]));
+        expect(cc.component(12), unorderedEquals([12, 11, 10, 9]));
 
-      expect(cc.componentId(5), 0);
+        expect(cc.connected(0, 8), false);
+        expect(cc.connected(7, 11), false);
+      });
+      test(
+          "given a fully connected graph only one connected component gets identified "
+          "and all vertices belong to that unique connected component", () {
+        final cc = ConnectedComponents(sample);
+        expect(cc.count, 1);
+        for (final vertex in sample.vertices) {
+          expect(sample.vertices, unorderedEquals(cc.component(vertex)));
+        }
+      });
     });
   });
 }

@@ -63,4 +63,13 @@ class AdjacencyListGraph<T> implements Graph<T> {
 
   @override
   Set<T> get vertices => _list.keys.toSet();
+
+  @override
+  String toString(){
+    final sb=StringBuffer();
+    for(final entry in _list.entries){
+      sb.writeln("[${entry.key}] => ${entry.value}");
+    }
+    return sb.toString();
+  }
 }
