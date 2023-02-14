@@ -14,6 +14,8 @@ abstract class Graph<T> {
   bool contains(T vertex);
 
   ///Connects vertices [a] and [b]
+  /// If the graph is directed only [a] will be connected to [b].
+  /// If the graph is not directed [a]->[b] and [b]->[a]
   void addEdge(T a, T b);
 
   /// Adds a new vertex to the graph
@@ -27,6 +29,8 @@ abstract class Graph<T> {
 class AdjacencyListGraph<T> implements Graph<T> {
   final Map<T, Set<T>> _list = {};
   final bool directed;
+
+  ///  Directed defines if the graph is a Digraph.
 
   AdjacencyListGraph(Iterable<T> vertices, {this.directed = false}) {
     for (final vertex in vertices) {
