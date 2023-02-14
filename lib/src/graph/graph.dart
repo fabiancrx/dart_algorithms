@@ -1,3 +1,4 @@
+/// Represents a graph data structure
 abstract class Graph<T> {
   bool get directed;
 

@@ -1,16 +1,14 @@
-// The BFS tree is useful for computing distances
-// between pairs of vertices.
-// Bipartite:
-//Color the levels of the BFS tree in
-// alternating colors.
-// • If you never color two connected
-// nodes the same color, then it is
-// bipartite.
-// • Otherwise, it’s not.
-
 import "dart:collection";
 
 import "package:dart_algorithms/src/graph/graph.dart";
+
+/// Graph traversal algorithm that explores all nodes at the present depth
+/// before to the next level of depth.
+/// It is useful for:
+/// Discovering connected components.
+/// Shortest path on unweighted graphs.
+/// Testing if a graph is bipartite.
+//https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif
 
 Set<T> bfs<T>(Graph<T> graph, T start) {
   final q = Queue<T>();

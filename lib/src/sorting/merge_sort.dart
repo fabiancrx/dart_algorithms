@@ -33,7 +33,7 @@ void mergeSort<E>(
 }
 
 /// Iterative implementation of the Merge sort Algorithm
-/// {@macro dart_algorithms}
+/// {@macro merge_sort}
 void mergeSortIterative<E>(
   List<E> elements, {
   int Function(E, E)? compare,

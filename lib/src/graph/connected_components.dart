@@ -1,14 +1,15 @@
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
 
-
+/// {@template connected_component}
+/// Pre processes a graph to answer connectivity questions in o(1)
+/// {@endtemplate}
 class ConnectedComponents<T> {
   final Graph<T> _graph;
   int _count = -1;
   Map<T, int> _componentId = {};
 
-  /// Pre processes a graph to answer connectivity questions in o(1)
-
+  /// {@macro connected_component}
   ConnectedComponents(this._graph) {
     _compute();
   }
