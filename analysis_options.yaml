@@ -5,3 +5,4 @@ linter:
     prefer_double_quotes: true
     prefer_single_quotes: false
     sort_constructors_first: false
+    lines_longer_than_80_chars: false

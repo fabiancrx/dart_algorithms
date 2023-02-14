@@ -7,36 +7,26 @@ import "fixtures/fixtures.dart";
 
 void main() {
   late final Graph<int> tinyG;
+  late final Graph<int> sample;
   setUpAll(() {
     tinyG = fromInput(loadTestFile("tinyG.txt"));
+    sample = fromInput(loadTestFile("sample.txt"));
   });
-  group("Check DFS", () {
-    test("", () {
-      tinyG.vertices.forEach((element) {
-        print("$element ${tinyG.neighbours(element)}");
-      });
+  group("Graph", () {
+    test("Depth First Search", () {
+      expect(dfs(sample, 0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
-    test("dfs", () {
-      final sample = """10
-9
-0 1
-0 4
-0 8
-1 2
-2 3
-4 5
-5 6
-4 7
-0 8
-8 9"""
-          .split("\n");
-      final graph = fromInput(sample);
-      print("dfs(${dfs(graph, 0)})");
-      print("bfs(${bfs(graph, 0)})");
+    test("Breadth First Search", () {
+      expect(bfs(sample, 0), [0, 1, 4, 8, 2, 5, 7, 9, 3, 6]);
     });
     test("Connected components", () {
       final cc = ConnectedComponents(tinyG);
       expect(cc.count, 3);
+
+
+      // 6 5 4 3 2 1 0
+      // 8 7
+      // 12 11 10 9
       expect(cc.connected(0, 6), true);
       expect(cc.connected(0, 8), false);
       expect(cc.connected(7, 11), false);

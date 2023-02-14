@@ -1,10 +1,13 @@
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
 
+
 class ConnectedComponents<T> {
   final Graph<T> _graph;
   int _count = -1;
   Map<T, int> _componentId = {};
+
+  /// Pre processes a graph to answer connectivity questions in o(1)
 
   ConnectedComponents(this._graph) {
     _compute();
@@ -31,8 +34,10 @@ class ConnectedComponents<T> {
     }
   }
 
+  /// The amount of connected components the graph has
   int get count => _count;
 
+  /// Given a [vertex] it returns the identifier (int) of the connected component it belongs to.
   int componentId(T vertex) {
     if (_componentId[vertex] != null) {
       return _componentId[vertex]!;
@@ -40,5 +45,14 @@ class ConnectedComponents<T> {
     throw StateError("Vertex $vertex does not exists in graph");
   }
 
+  ///Given a [vertex] it returns all the reachable vertices in its connected component.
+  ///If the graph is connected, then it displays the complete graph.
+  List<T> component(T vertex) {
+    final id = componentId(vertex);
+    return _componentId.entries.where((element) => element.value == id).map((e) => e.key).toList();
+  }
+
+  /// Whether there is a path between vertices [a] and [b].
+  /// Which implies they both belong to the same connected component.
   bool connected(T a, T b) => componentId(a) == componentId(b);
 }
