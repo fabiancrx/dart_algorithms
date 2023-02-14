@@ -3,6 +3,8 @@ import "package:dart_algorithms/src/graph/graph.dart";
 
 /// {@template connected_component}
 /// Pre processes a graph to answer connectivity questions in o(1)
+/// Vertices v and w are strongly connected if there is both a directed path
+/// from v to w and a directed path from w to v
 /// {@endtemplate}
 class ConnectedComponents<T> {
   final Graph<T> _graph;
