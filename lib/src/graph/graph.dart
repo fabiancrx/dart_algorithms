@@ -24,6 +24,10 @@ abstract class Graph<T> {
   /// The degree of a vertex [vertex]. The degree is the amount of edges a vertex has
   /// If the vertex does not exists it returns -1
   int degree(T vertex);
+  /// Returns a reversed representation of a graph.
+  /// If the graph is undirected the reverse and original representations are the same.
+  /// If it's a digraph then all wdges between a and b are reversed
+  Graph<T> reversed();
 }
 
 class AdjacencyListGraph<T> implements Graph<T> {
@@ -70,11 +74,26 @@ class AdjacencyListGraph<T> implements Graph<T> {
   Set<T> get vertices => _list.keys.toSet();
 
   @override
-  String toString(){
-    final sb=StringBuffer();
-    for(final entry in _list.entries){
+  String toString() {
+    final sb = StringBuffer();
+    for (final entry in _list.entries) {
       sb.writeln("[${entry.key}] => ${entry.value}");
     }
     return sb.toString();
+  }
+
+  @override
+  Graph<T> reversed() {
+    assert(directed, "Graph must be directed in order to be reversed");
+    if (!directed) return this;
+
+    final R = AdjacencyListGraph(vertices,directed: directed);
+
+    for (final vertex in vertices) {
+      for (final w in neighbours(vertex)) {
+        R.addEdge(w, vertex);
+      }
+    }
+    return R;
   }
 }

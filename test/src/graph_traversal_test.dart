@@ -2,6 +2,7 @@ import "package:dart_algorithms/src/graph/bfs.dart";
 import "package:dart_algorithms/src/graph/connected_components.dart";
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
+import "package:dart_algorithms/src/graph/topological_sort.dart";
 import "package:test/test.dart";
 import "fixtures/fixtures.dart";
 
@@ -9,6 +10,7 @@ void main() {
   late final Graph<int> tinyG;
   late final Graph<int> tinyDirectedG;
   late final Graph<int> tinyDirectedG2;
+  late final Graph<int> tinyDirectedG3;
   late final Graph<int> sample;
 
   setUpAll(() {
@@ -16,6 +18,7 @@ void main() {
     sample = fromInput(loadTestFile("sample.txt"));
     tinyDirectedG = fromInput(loadTestFile("tinyDG.txt"), directed: true);
     tinyDirectedG2 = fromInput(loadTestFile("tinyDG2.txt"), directed: true);
+    tinyDirectedG3 = fromInput(loadTestFile("tinyDG3.txt"), directed: true);
   });
   group("Graph ", () {
     test(" is correctly constructed when directed", () {
@@ -38,6 +41,9 @@ void main() {
         expect(bfs(sample, 0), [0, 1, 4, 8, 2, 5, 7, 9, 3, 6]);
         expect(bfs(tinyG, 0), [0, 5, 1, 2, 6, 4, 3]);
         expect(bfs(tinyDirectedG2, 0), [0, 1, 2, 4, 3, 5]);
+      });
+      test("Topological sort", () {
+        expect(topologicalSort(tinyDirectedG3), [3, 6, 0, 5, 2, 1, 4]);
       });
     });
 
@@ -62,6 +68,25 @@ void main() {
         expect(cc.count, 1);
         for (final vertex in sample.vertices) {
           expect(sample.vertices, unorderedEquals(cc.component(vertex)));
+        }
+      });
+      test("given", () {
+        final cc = ConnectedComponents(tinyDirectedG);
+        expect(tinyDirectedG.directed, true);
+        expect(cc.count, 5);
+
+        final groups = [
+          [1],
+          [0, 2, 3, 4, 5],
+          [9, 10, 11, 12],
+          [6, 8],
+          [7]
+        ];
+        for (final group in groups) {
+          final componentId = cc.componentId(group.first);
+          for (final vertex in group) {
+            expect(cc.componentId(vertex), componentId);
+          }
         }
       });
     });

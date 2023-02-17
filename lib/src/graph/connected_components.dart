@@ -1,5 +1,6 @@
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
+import "package:dart_algorithms/src/graph/topological_sort.dart";
 
 /// {@template connected_component}
 /// Pre processes a graph to answer connectivity questions in o(1)
@@ -20,9 +21,20 @@ class ConnectedComponents<T> {
     _count = 0;
     _componentId = {};
     if (_graph.vertices.isEmpty) return;
-    final visited = Map<T, bool>.fromIterable(_graph.vertices, value: (_) => false);
+    if (!_graph.directed) {
+      _connectedComponent(_graph.vertices);
+    } else {
+      /// O(V+E) it performs 2 DFS, one in the reversed graph.
+      /// And a second one on the topologically sorted vertices.
+      final reversed = _graph.reversed();
+      final reversedTopological = topologicalSort(reversed);
+      _connectedComponent(reversedTopological);
+    }
+  }
 
-    for (final vertex in _graph.vertices) {
+  void _connectedComponent(Iterable<T> vertices) {
+    final visited = Map<T, bool>.fromIterable(vertices, value: (_) => false);
+    for (final vertex in vertices) {
       if (!(visited[vertex] ?? true)) {
         dfs(
           _graph,
@@ -58,4 +70,16 @@ class ConnectedComponents<T> {
   /// Whether there is a path between vertices [a] and [b].
   /// Which implies they both belong to the same connected component.
   bool connected(T a, T b) => componentId(a) == componentId(b);
+
+  @override
+  String toString() {
+    final sb = StringBuffer();
+    for (final entry in _componentId.entries) {
+      sb.writeln("[${entry.key}] => ${entry.value}");
+    }
+    return sb.toString();
+  }
 }
+
+/// Finds connected components in a digraph in O(V)
+void _tarjan() {}
