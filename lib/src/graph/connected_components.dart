@@ -1,3 +1,6 @@
+import "dart:collection" show HashMap, HashSet, Queue;
+import "dart:math";
+
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
 import "package:dart_algorithms/src/graph/topological_sort.dart";
@@ -7,7 +10,7 @@ import "package:dart_algorithms/src/graph/topological_sort.dart";
 /// Vertices v and w are strongly connected if there is both a directed path
 /// from v to w and a directed path from w to v
 /// {@endtemplate}
-class ConnectedComponents<T> {
+class ConnectedComponents<T extends Object> {
   final Graph<T> _graph;
   int _count = -1;
   Map<T, int> _componentId = {};
@@ -24,11 +27,8 @@ class ConnectedComponents<T> {
     if (!_graph.directed) {
       _connectedComponent(_graph.vertices);
     } else {
-      /// O(V+E) it performs 2 DFS, one in the reversed graph.
-      /// And a second one on the topologically sorted vertices.
-      final reversed = _graph.reversed();
-      final reversedTopological = topologicalSort(reversed);
-      _connectedComponent(reversedTopological);
+
+      _tarjanStronglyConnectedComponents();
     }
   }
 
@@ -46,6 +46,52 @@ class ConnectedComponents<T> {
         );
         _count++;
       }
+    }
+  }
+  /// O(V+E) it performs 2 DFS, one in the reversed graph.
+  /// And a second one on the topologically sorted vertices.
+  void _kosarajuStronglyConnectedComponents() {
+    final reversed = _graph.reversed();
+    final reversedTopological = topologicalSort(reversed);
+    _connectedComponent(reversedTopological);
+  }
+
+  /// Finds connected components in a digraph in O(V+E)
+  void _tarjanStronglyConnectedComponents() {
+    final lowLinks = HashMap<T, int>();
+    final indexes = HashMap<T, int>();
+    final onStack = HashSet<T>();
+
+    var index = 0;
+    final lastVisited = Queue<T>();
+
+    void strongConnect(T vertex) {
+      indexes[vertex] = index;
+      var lowLink = lowLinks[vertex] = index;
+      index++;
+      lastVisited.addLast(vertex);
+      onStack.add(vertex);
+      for (final next in _graph.neighbours(vertex)) {
+        if (!indexes.containsKey(next)) {
+          strongConnect(next);
+          lowLink = lowLinks[vertex] = min(lowLink, lowLinks[next]!);
+        } else if (onStack.contains(next)) {
+          lowLink = lowLinks[vertex] = min(lowLink, indexes[next]!);
+        }
+      }
+      if (lowLinks[vertex] == indexes[vertex]) {
+        T next;
+        do {
+          next = lastVisited.removeLast();
+          onStack.remove(next);
+          _componentId[next] = count;
+        } while (!_defaultEquals(next, vertex));
+        _count++;
+      }
+    }
+
+    for (final vertex in _graph.vertices) {
+      if (!indexes.containsKey(vertex)) strongConnect(vertex);
     }
   }
 
@@ -81,5 +127,4 @@ class ConnectedComponents<T> {
   }
 }
 
-/// Finds connected components in a digraph in O(V)
-void _tarjan() {}
+bool _defaultEquals(Object a, Object b) => a == b;
