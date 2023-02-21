@@ -47,12 +47,19 @@ void main() {
       });
 
       test("listing", () {
-        final tinyGD = fromInput(loadTestFile("tinyG.txt"), directed: true);
-        final sampleD = fromInput(loadTestFile("sample.txt"), directed: true);
         final selfLoop = fromInput(loadTestFile("selfLoop.txt"), directed: true);
-        // expect(cycles(selfLoop), [[0,0]]);
-        expect(cycles(tinyDirectedG), [[7,6,8,7],[9,11,12,9],[]]);
-
+        expect(findCycle(selfLoop), [0, 0]);
+        expect(
+          findCycle(tinyDirectedG),
+          anyOf([
+            [2, 3, 2],
+            [5, 4, 2, 3, 5],
+            [0, 5, 4, 2, 0],
+            [6, 8, 6],
+            [9, 10, 12, 9],
+            [9, 11, 12, 9],
+          ]),
+        );
       });
     });
 

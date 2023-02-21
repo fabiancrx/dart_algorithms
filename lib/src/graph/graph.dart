@@ -101,16 +101,27 @@ class AdjacencyListGraph<T> implements Graph<T> {
   }
 }
 
-bool hasCycle<T>(Graph<T> graph) {
+/// Returns true if a graph has any cycle
+bool hasCycle<T>(Graph<T> graph) => findCycle(graph).isEmpty;
+
+/// Finds a cycle in a digraph if any
+/// It returns an empty list if no cycle is found
+/// It returns the path to the first cycle found
+List<T> findCycle<T>(Graph<T> graph) {
+  if (!graph.directed) throw Exception("Can't find cycle in undirected graphs");
   final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
   final onStack = HashSet<T>();
-  final cycles = <T>[];
-  bool? dfs(T vertex) {
+  List<T>? dfs(T vertex) {
     onStack.add(vertex);
     visited[vertex] = true;
     for (final neighbour in graph.neighbours(vertex)) {
       if (onStack.contains(neighbour)) {
-        return true;
+        final cycle = [...onStack, neighbour];
+        while (cycle.first != neighbour) {
+          // Remove vertices in the path that precede the cycle found
+          cycle.removeAt(0);
+        }
+        return cycle;
       }
       if (!visited[neighbour]!) {
         return dfs(neighbour);
@@ -122,38 +133,10 @@ bool hasCycle<T>(Graph<T> graph) {
   for (final vertex in graph.vertices) {
     if (!visited[vertex]!) {
       final hasCycle = dfs(vertex);
-      if (hasCycle != null && hasCycle) return hasCycle;
+      if (hasCycle != null) return hasCycle;
     }
     // Clear stack when moving to another connected component
     onStack.clear();
   }
-  return false;
-}
-
-List<List<T>> cycles<T>(Graph<T> graph) {
-  final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
-  final onStack = HashSet<T>();
-  final cycles = <List<T>>[];
-  void dfs(T vertex) {
-    onStack.add(vertex);
-    visited[vertex] = true;
-    for (final neighbour in graph.neighbours(vertex)) {
-      if (onStack.contains(neighbour)) {
-        cycles.add([vertex,...onStack,neighbour]);
-      }
-      if (!visited[neighbour]!) {
-        return dfs(neighbour);
-      }
-      onStack.remove(neighbour);
-    }
-  }
-
-  for (final vertex in graph.vertices) {
-    if (!visited[vertex]!) {
-      dfs(vertex);
-    }
-    // Clear stack when moving to another connected component
-    onStack.clear();
-  }
-  return cycles;
+  return [];
 }
