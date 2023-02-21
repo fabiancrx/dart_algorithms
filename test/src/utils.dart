@@ -52,7 +52,7 @@ Future<int> plotTestFile(String fileName) async {
 
 void main(){
   test("",()async{
-   await plotTestFile("selfLoop.txt");
+   await plotTestFile("tinyG.txt");
   });
 
 }

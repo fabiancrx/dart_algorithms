@@ -4,6 +4,7 @@ import "package:dart_algorithms/dart_algorithms.dart";
 import "package:test/test.dart";
 
 int intCompareFn(int a, int b) => a.compareTo(b);
+int boxedIntCompareFn(BoxedInt a, BoxedInt b) => a.value.compareTo(b.value);
 
 typedef SortFunction = void Function<E>(
   List<E> elements, {
@@ -68,6 +69,24 @@ void main() {
       expect(isSorted(list, intCompareFn), true);
     });
   });
+}
+
+class BoxedInt {
+  final int id;
+  final int value;
+
+  BoxedInt(this.value, {required this.id});
+
+  static List<BoxedInt> intToBoxed(List<int> ints) {
+    return List.generate(ints.length, (index) => BoxedInt(ints[index], id: index));
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is BoxedInt && runtimeType == other.runtimeType && value == other.value;
+
+  @override
+  int get hashCode => value.hashCode;
 }
 
 List<int> randomList([int size = 1000]) {

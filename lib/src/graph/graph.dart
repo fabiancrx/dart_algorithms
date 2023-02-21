@@ -26,6 +26,7 @@ abstract class Graph<T> {
   /// The degree of a vertex [vertex]. The degree is the amount of edges a vertex has
   /// If the vertex does not exists it returns -1
   int degree(T vertex);
+
   /// Returns a reversed representation of a graph.
   /// If the graph is undirected the reverse and original representations are the same.
   /// If it's a digraph then all wdges between a and b are reversed
@@ -89,7 +90,7 @@ class AdjacencyListGraph<T> implements Graph<T> {
     assert(directed, "Graph must be directed in order to be reversed");
     if (!directed) return this;
 
-    final R = AdjacencyListGraph(vertices,directed: directed);
+    final R = AdjacencyListGraph(vertices, directed: directed);
 
     for (final vertex in vertices) {
       for (final w in neighbours(vertex)) {
@@ -103,7 +104,7 @@ class AdjacencyListGraph<T> implements Graph<T> {
 bool hasCycle<T>(Graph<T> graph) {
   final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
   final onStack = HashSet<T>();
-
+  final cycles = <T>[];
   bool? dfs(T vertex) {
     onStack.add(vertex);
     visited[vertex] = true;
@@ -127,4 +128,32 @@ bool hasCycle<T>(Graph<T> graph) {
     onStack.clear();
   }
   return false;
+}
+
+List<List<T>> cycles<T>(Graph<T> graph) {
+  final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
+  final onStack = HashSet<T>();
+  final cycles = <List<T>>[];
+  void dfs(T vertex) {
+    onStack.add(vertex);
+    visited[vertex] = true;
+    for (final neighbour in graph.neighbours(vertex)) {
+      if (onStack.contains(neighbour)) {
+        cycles.add([vertex,...onStack,neighbour]);
+      }
+      if (!visited[neighbour]!) {
+        return dfs(neighbour);
+      }
+      onStack.remove(neighbour);
+    }
+  }
+
+  for (final vertex in graph.vertices) {
+    if (!visited[vertex]!) {
+      dfs(vertex);
+    }
+    // Clear stack when moving to another connected component
+    onStack.clear();
+  }
+  return cycles;
 }

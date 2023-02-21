@@ -33,7 +33,7 @@ void main() {
     });
 
     group("cycle ", () {
-      test("", () {
+      test("detection", () {
         expect(hasCycle(tinyDirectedG2), true);
         expect(hasCycle(tinyDirectedG), true);
 
@@ -41,10 +41,17 @@ void main() {
         final sampleD = fromInput(loadTestFile("sample.txt"), directed: true);
         final selfLoop = fromInput(loadTestFile("selfLoop.txt"), directed: true);
 
-
         expect(hasCycle(tinyGD), false);
         expect(hasCycle(sampleD), false);
         expect(hasCycle(selfLoop), true);
+      });
+
+      test("listing", () {
+        final tinyGD = fromInput(loadTestFile("tinyG.txt"), directed: true);
+        final sampleD = fromInput(loadTestFile("sample.txt"), directed: true);
+        final selfLoop = fromInput(loadTestFile("selfLoop.txt"), directed: true);
+        // expect(cycles(selfLoop), [[0,0]]);
+        expect(cycles(tinyDirectedG), [[7,6,8,7],[9,11,12,9],[]]);
 
       });
     });

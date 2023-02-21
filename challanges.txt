@@ -2,7 +2,6 @@
 Flood fill
 
 Is a graph bipartite
-Find cycle
 Eulerian tour
 ++ hard
 Tarjan algorithm (lay out graph without crossing edges)
@@ -13,7 +12,6 @@ Isomorphism
 
 Path. Is there a path between s and t ?
 Shortest path. What is the shortest path between s and t ?
-Cycle. Is there a cycle in the graph?
 Euler tour. Is there a cycle that uses each edge exactly once?
 Hamilton tour. Is there a cycle that uses each vertex exactly once.
 Connectivity. Is there a way to connect all of the vertices?
