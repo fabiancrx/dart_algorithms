@@ -1,3 +1,5 @@
+import "dart:collection";
+
 /// Represents a graph data structure
 abstract class Graph<T> {
   bool get directed;
@@ -31,7 +33,7 @@ abstract class Graph<T> {
 }
 
 class AdjacencyListGraph<T> implements Graph<T> {
-  final Map<T, Set<T>> _list = {};
+  final HashMap<T, Set<T>> _list = HashMap();
   final bool directed;
 
   ///  Directed defines if the graph is a Digraph.
@@ -96,4 +98,33 @@ class AdjacencyListGraph<T> implements Graph<T> {
     }
     return R;
   }
+}
+
+bool hasCycle<T>(Graph<T> graph) {
+  final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
+  final onStack = HashSet<T>();
+
+  bool? dfs(T vertex) {
+    onStack.add(vertex);
+    visited[vertex] = true;
+    for (final neighbour in graph.neighbours(vertex)) {
+      if (onStack.contains(neighbour)) {
+        return true;
+      }
+      if (!visited[neighbour]!) {
+        return dfs(neighbour);
+      }
+      onStack.remove(neighbour);
+    }
+  }
+
+  for (final vertex in graph.vertices) {
+    if (!visited[vertex]!) {
+      final hasCycle = dfs(vertex);
+      if (hasCycle != null && hasCycle) return hasCycle;
+    }
+    // Clear stack when moving to another connected component
+    onStack.clear();
+  }
+  return false;
 }

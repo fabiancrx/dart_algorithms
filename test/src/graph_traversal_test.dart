@@ -32,6 +32,23 @@ void main() {
       expect(dfs(tinyDirectedG, 0), unorderedEquals([0, 1, 2, 3, 4, 5]));
     });
 
+    group("cycle ", () {
+      test("", () {
+        expect(hasCycle(tinyDirectedG2), true);
+        expect(hasCycle(tinyDirectedG), true);
+
+        final tinyGD = fromInput(loadTestFile("tinyG.txt"), directed: true);
+        final sampleD = fromInput(loadTestFile("sample.txt"), directed: true);
+        final selfLoop = fromInput(loadTestFile("selfLoop.txt"), directed: true);
+
+
+        expect(hasCycle(tinyGD), false);
+        expect(hasCycle(sampleD), false);
+        expect(hasCycle(selfLoop), true);
+
+      });
+    });
+
     group("Traversal ", () {
       test("Depth First Search", () {
         expect(dfs(sample, 0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
