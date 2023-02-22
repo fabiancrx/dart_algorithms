@@ -10,7 +10,8 @@ typedef SortFunction = void Function<E>(
   List<E> elements, {
   int Function(E, E)? compare,
 });
-// TODO (croxx5f): Add stability and different data distributions and types in the tests.
+// TODO (croxx5f): Add stability and different data distributions and types in the tests:
+// sorted, partially sorted, reverse order, unsorted
 void main() {
   test("isSorted helper function", () {
     final list = randomList();
@@ -62,6 +63,12 @@ void main() {
       quickSort(list);
       expect(isSorted(list, intCompareFn), true);
     });
+    test("Quick Sort Naive implementation", () {
+      final list = randomList();
+      expect(isSorted(list, intCompareFn), false);
+      quickSortSimple(list);
+      expect(isSorted(list, intCompareFn), true);
+    });
     test("Heap Sort ", () {
       final list = randomList();
       expect(isSorted(list, intCompareFn), false);
@@ -93,6 +100,8 @@ List<int> randomList([int size = 1000]) {
   final random = Random();
   return [for (var i = 0; i < size; i++) random.nextInt(42)];
 }
+
+List<int> sortedList([int size = 1000]) => randomList(size)..sort();
 
 bool isSorted<T>(Iterable<T> elements, int Function(T a, T b) compareFn) {
   for (var i = 1; i < elements.length; i++) {

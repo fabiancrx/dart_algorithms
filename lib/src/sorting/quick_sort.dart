@@ -5,19 +5,22 @@ import "package:dart_algorithms/src/utils.dart";
 
 part "../quick_select.dart";
 
-void _quickSortSimple<E>(
+//Naive and easier to implement version of quicksort, with no optimizations applied for the sake of simplicity
+/// {@macro quick_sort}
+void quickSortSimple<E>(
   List<E> elements, {
   int lo = 0,
   int? hi,
   int Function(E, E)? compare,
 }) {
   hi ??= elements.length - 1;
+  if (lo >= hi) return;
 
   compare ??= defaultCompare;
 
   final pivot = _partition(elements, lo, hi, compare: compare);
-  _quickSortSimple(elements, lo: lo, hi: pivot - 1, compare: compare);
-  _quickSortSimple(elements, lo: pivot + 1, hi: hi, compare: compare);
+  quickSortSimple(elements, lo: lo, hi: pivot - 1, compare: compare);
+  quickSortSimple(elements, lo: pivot + 1, hi: hi, compare: compare);
 }
 
 int _partition<E>(
@@ -97,6 +100,6 @@ void quickSort<E>(
       i++;
     }
   }
-  quickSort(elements, lo: lo, hi: lt - 1);
-  quickSort(elements, lo: gt + 1, hi: hi);
+  quickSort(elements, lo: lo, hi: lt - 1, compare: compare, random: random);
+  quickSort(elements, lo: gt + 1, hi: hi, compare: compare, random: random);
 }
