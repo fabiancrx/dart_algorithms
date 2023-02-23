@@ -1,22 +1,21 @@
 import "dart:math";
 
+import "package:collection/collection.dart" show ListExtensions;
 import "package:dart_algorithms/dart_algorithms.dart";
 import "package:test/test.dart";
 
 int intCompareFn(int a, int b) => a.compareTo(b);
 
-int boxedIntCompareFn(BoxedInt a, BoxedInt b) => a.value.compareTo(b.value);
-
 typedef SortFunction = void Function<E>(
   List<E> elements, {
   int Function(E, E)? compare,
 });
-// TODO (croxx5f): Add stability
+
 void main() {
   final datasets = [
-    randomList,
-    mostlySorted,
     sortedList,
+    mostlySorted,
+    randomList,
     reverseOrderedList,
   ];
   final sortingAlgorithms = {
@@ -48,9 +47,25 @@ void main() {
       });
     }
   });
+  test("Insertion Sort is stable", () {
+    for (final dataset in datasets) {
+      final list = box(dataset()).toList();
+      insertionSort(list);
+      expect(isStable(list), true);
+    }
+  });
+  test("Merge Sort is stable", () {
+    for (final dataset in datasets) {
+      final list = box(dataset()).toList();
+      mergeSort(list);
+      expect(isStable(list), true);
+    }
+  });
 }
 
-class BoxedInt {
+Iterable<BoxedInt> box(List<int> ints) => ints.mapIndexed((index, element) => BoxedInt(element, id: index));
+
+class BoxedInt implements Comparable<BoxedInt> {
   final int id;
   final int value;
 
@@ -66,6 +81,16 @@ class BoxedInt {
 
   @override
   int get hashCode => value.hashCode;
+
+  @override
+  int compareTo(BoxedInt other) {
+    return value - other.value;
+  }
+
+  @override
+  String toString() {
+    return "{id: $id, value: $value}";
+  }
 }
 
 List<int> randomList([int size = 1000]) {
@@ -91,6 +116,18 @@ bool isSorted<T>(Iterable<T> elements, int Function(T a, T b) compareFn) {
     final prev = elements.elementAt(i - 1);
     final curr = elements.elementAt(i);
     if (compareFn(prev, curr) > 0) return false;
+  }
+  return true;
+}
+
+bool isStable(Iterable<BoxedInt> elements) {
+  for (var i = 1; i < elements.length; i++) {
+    final prev = elements.elementAt(i - 1);
+    final curr = elements.elementAt(i);
+    if (prev == curr && prev.id > curr.id) {
+      print("Inversion at $i [$prev,$curr] ${elements.toList().sublist(max(i-10,0),min(i+10,elements.length))}");
+      return false;
+    }
   }
   return true;
 }
