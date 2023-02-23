@@ -41,7 +41,7 @@ void main() {
       test(sort.key, () {
         for (final dataset in datasets) {
           final list = dataset();
-          sort.value(list);
+          sort.value(list, compare: intCompareFn);
           expect(isSorted(list, intCompareFn), true);
         }
       });
@@ -125,7 +125,7 @@ bool isStable(Iterable<BoxedInt> elements) {
     final prev = elements.elementAt(i - 1);
     final curr = elements.elementAt(i);
     if (prev == curr && prev.id > curr.id) {
-      print("Inversion at $i [$prev,$curr] ${elements.toList().sublist(max(i-10,0),min(i+10,elements.length))}");
+      print("Inversion at $i [$prev,$curr] ${elements.toList().sublist(max(i - 10, 0), min(i + 10, elements.length))}");
       return false;
     }
   }

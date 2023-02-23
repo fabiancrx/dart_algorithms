@@ -63,13 +63,19 @@ For any graph given v vertices and e edges:
 
 #### Algorithms
 
+- [x] Depth First Search (DFS)
+- [x] Breadth First Search (BFS)
+- [x] Topological Sort
+- [x] Cycle detection
+- [x] Strongly connected components (SCC)
+
 | Algorithm        | Running time | Extra space | 
 |------------------|--------------|-------------|
 | DFS              | O(v+e)       | O(v)        |
 | BFS              | O(v+e)       | O(v)        |
-
-- [x] Depth First Search O(deg(v))
-- [x] Breadth First Search
+| Topological sort | O(v+e)       | O(v)        |
+| SCC              | O(v+e)       | O(v)        |
+| Cycle detection  | O(v+e)       | O(v)        |
 
 ---
 

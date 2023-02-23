@@ -8,14 +8,14 @@ import "package:dart_algorithms/src/graph/graph.dart";
 /// Path between edges
 
 Set<T> dfs<T>(Graph<T> graph, T start, {Map<T, bool>? visited, void Function(T node)? onVisited}) {
-  final _visited = visited ?? Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
+  final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
   final output = <T>{};
   void _dfs(T vertex) {
-    _visited[vertex] = true;
+    visited[vertex] = true;
     onVisited?.call(vertex);
     output.add(vertex);
     for (final neighbour in graph.neighbours(vertex)) {
-      if (!_visited[neighbour]!) {
+      if (!visited[neighbour]!) {
         _dfs(neighbour);
       }
     }

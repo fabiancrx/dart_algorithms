@@ -14,8 +14,8 @@ Path. Is there a path between s and t ?
 Shortest path. What is the shortest path between s and t ?
 Euler tour. Is there a cycle that uses each edge exactly once?
 Hamilton tour. Is there a cycle that uses each vertex exactly once.
-Connectivity. Is there a way to connect all of the vertices?
-MST. What is the best way to connect all of the vertices?
-Biconnectivity. Is there a vertex whose removal disconnects the graph?
+Connectivity. Is there a way to connect all the vertices?
+MST. What is the best way to connect all the vertices?
+Bi-connectivity. Is there a vertex whose removal disconnects the graph?
 Planarity. Can you draw the graph in the plane with no crossing edges
-Graph isomorphism. Do two adjacency lists represent the same graph?
+Graph isomorphism: Do two adjacency lists represent the same graph?

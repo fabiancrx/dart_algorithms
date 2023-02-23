@@ -1,6 +1,9 @@
 import "package:dart_algorithms/src/graph/graph.dart";
 
+/// Given a directed acyclic graph (DAG) it returns an ordered sequence of vertices
+/// such that every edge dependencies are listed before it.
 Iterable<T> topologicalSort<T>(Graph<T> graph, {List<T>? stack}) {
+  assert(hasCycle(graph), false);
   final visited = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
   stack ??= [];
   final output = <T>[];
