@@ -1,5 +1,6 @@
 import "package:dart_algorithms/src/graph/bfs.dart";
 import "package:dart_algorithms/src/graph/connected_components.dart";
+import "package:dart_algorithms/src/graph/cycle_detection.dart";
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
 import "package:dart_algorithms/src/graph/topological_sort.dart";

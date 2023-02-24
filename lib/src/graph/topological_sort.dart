@@ -1,3 +1,4 @@
+import "package:dart_algorithms/src/graph/cycle_detection.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
 
 /// Given a directed acyclic graph (DAG) it returns an ordered sequence of vertices
