@@ -1,8 +1,11 @@
+import "dart:math";
+
 import "package:dart_algorithms/src/graph/bfs.dart";
 import "package:dart_algorithms/src/graph/connected_components.dart";
 import "package:dart_algorithms/src/graph/cycle_detection.dart";
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
+import "package:dart_algorithms/src/graph/minimum_spanning_tree.dart";
 import "package:dart_algorithms/src/graph/topological_sort.dart";
 import "package:test/test.dart";
 import "fixtures/fixtures.dart";
@@ -102,7 +105,7 @@ void main() {
           expect(sample.vertices, unorderedEquals(cc.component(vertex)));
         }
       });
-      test("given", () {
+      test("given a disconnected graph each connected component gets identified", () {
         final cc = ConnectedComponents(tinyDirectedG);
         expect(tinyDirectedG.directed, true);
         expect(cc.count, 5);
@@ -122,7 +125,31 @@ void main() {
         }
       });
     });
+
+    group("Minimum Spanning Trees", () {
+      final tinyEWG = fromInputWeighted(loadTestFile("tinyEWG.txt"));
+
+      test("Kruskal", () {
+        // ignore: prefer_int_literals
+        expect(kruskal(tinyEWG).fold(0.0, (a, b) => a + b.weight), 1.81);
+      });
+    });
   });
+}
+
+WeightedGraph<int> fromInputWeighted(List<String> input, {bool directed = false}) {
+  final vertices = int.parse(input.removeAt(0));
+  final edges = input.removeAt(0);
+  final graph = AdjacencyListWeightedGraph(List.generate(vertices, (i) => i), directed: directed);
+
+  for (final edge in input) {
+    final s = edge.split(" ");
+    final a = int.parse(s.first);
+    final b = int.parse(s[1]);
+    final weight = num.parse(s.last);
+    graph.addEdge(WeightedEdge(a, b, weight: weight));
+  }
+  return graph;
 }
 
 Graph<int> fromInput(List<String> input, {bool directed = false}) {

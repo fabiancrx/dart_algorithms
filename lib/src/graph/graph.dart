@@ -100,3 +100,90 @@ class AdjacencyListGraph<T> implements Graph<T> {
     return R;
   }
 }
+
+abstract class WeightedGraph<V> {
+  Set<WeightedEdge<V>> get allEdges;
+
+  Set<V> get vertices;
+
+  Set<WeightedEdge<V>> edges(V vertex);
+
+  void addEdge(WeightedEdge<V> edge);
+
+}
+
+class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
+  final T a;
+  final T b;
+
+  final num weight;
+
+  WeightedEdge(this.a, this.b, {this.weight = 0});
+
+  @override
+  int compareTo(WeightedEdge<T> other) => weight.compareTo(other.weight);
+
+  @override
+  String toString() => "$a--[$weight]--$b";
+}
+
+class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
+  final HashMap<T, Set<WeightedEdge<T>>> _list = HashMap();
+  final bool directed;
+
+  ///  Directed defines if the graph is a Digraph.
+
+  AdjacencyListWeightedGraph(Iterable<T> vertices, {this.directed = false}) {
+    for (final vertex in vertices) {
+      _list[vertex] = {};
+    }
+  }
+
+  @override
+  void addEdge(WeightedEdge<T> edge) {
+    if (_list[edge.a] == null || _list[edge.b] == null) {
+      throw StateError("Can't add edge between two vertices that do not exist");
+    }
+    _list[edge.a]!.add(edge);
+    if (!directed) {
+      _list[edge.b]!.add(edge);
+    }
+  }
+
+  @override
+  void addVertex(T a) {
+    _list[a] = {};
+  }
+
+  @override
+  bool contains(T vertex) => _list[vertex] != null;
+
+  @override
+  int degree(T vertex) => _list[vertex]?.length ?? -1;
+
+  @override
+  Set<WeightedEdge<T>> edges(T vertex) {
+    if (contains(vertex)) return _list[vertex]!;
+    throw StateError("Error retrieving neighbours of vertex $vertex does not exist");
+  }
+
+  @override
+  Set<WeightedEdge<T>> get allEdges => _list.values.fold(<WeightedEdge<T>>{}, (prev, curr) => prev.union(curr));
+
+
+  @override
+  Set<T> get vertices => _list.keys.toSet();
+
+  @override
+  String toString() {
+    final sb = StringBuffer();
+    for (final entry in _list.entries) {
+      sb.writeln("[${entry.key}] => ${entry.value}");
+    }
+    return sb.toString();
+  }
+
+
+
+
+}
