@@ -109,7 +109,6 @@ abstract class WeightedGraph<V> {
   Set<WeightedEdge<V>> edges(V vertex);
 
   void addEdge(WeightedEdge<V> edge);
-
 }
 
 class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
@@ -125,6 +124,12 @@ class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
 
   @override
   String toString() => "$a--[$weight]--$b";
+
+  T other(T x) {
+    if (x == a) return b;
+    if (x == b) return a;
+    throw Exception("Can't return other node in the edge as $x is not $a or $b");
+  }
 }
 
 class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
@@ -170,7 +175,6 @@ class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
   @override
   Set<WeightedEdge<T>> get allEdges => _list.values.fold(<WeightedEdge<T>>{}, (prev, curr) => prev.union(curr));
 
-
   @override
   Set<T> get vertices => _list.keys.toSet();
 
@@ -182,8 +186,4 @@ class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
     }
     return sb.toString();
   }
-
-
-
-
 }

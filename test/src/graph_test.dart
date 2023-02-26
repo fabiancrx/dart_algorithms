@@ -1,5 +1,3 @@
-import "dart:math";
-
 import "package:dart_algorithms/src/graph/bfs.dart";
 import "package:dart_algorithms/src/graph/connected_components.dart";
 import "package:dart_algorithms/src/graph/cycle_detection.dart";
@@ -38,8 +36,8 @@ void main() {
 
     group("cycle ", () {
       test("detection", () {
-        expect(hasCycle(tinyDirectedG2), true);
         expect(hasCycle(tinyDirectedG), true);
+        expect(hasCycle(tinyDirectedG2), true);
 
         final tinyGD = fromInput(loadTestFile("tinyG.txt"), directed: true);
         final sampleD = fromInput(loadTestFile("sample.txt"), directed: true);
@@ -132,6 +130,10 @@ void main() {
       test("Kruskal", () {
         // ignore: prefer_int_literals
         expect(kruskal(tinyEWG).fold(0.0, (a, b) => a + b.weight), 1.81);
+      });
+      test("Prim", () {
+        // ignore: prefer_int_literals
+        expect(prim(tinyEWG).fold(0.0, (a, b) => a + b.weight), 1.81);
       });
     });
   });
