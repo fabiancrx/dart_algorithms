@@ -27,7 +27,7 @@ Future<int> plotTestFile(String fileName) async {
   try {
     final fileNameWithoutExtension = fileName.split(".").first;
 
-    final dotFormat = transformGraphFormat(loadTestFile(fileName), directed: true, filename: fileNameWithoutExtension);
+    final dotFormat = transformGraphFormat(loadTestFile(fileName), directed: fileNameWithoutExtension.contains("DG"), filename: fileNameWithoutExtension);
 
     final process = await Process.start("dot", ["-Tsvg", "-o", "./test/$fileNameWithoutExtension.svg"]);
     final resultStdoutFuture = process.stdout.transform(const Utf8Decoder()).transform(const LineSplitter()).toList();

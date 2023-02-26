@@ -3,7 +3,7 @@ import "dart:collection";
 import "package:dart_algorithms/src/graph/graph.dart";
 
 /// Returns true if a graph has any cycle
-bool hasCycle<T>(Graph<T> graph) => findCycle(graph).isEmpty;
+bool hasCycle<T>(Graph<T> graph) => findCycle(graph).isNotEmpty;
 
 /// Finds a cycle in a digraph if any
 /// It returns an empty list if no cycle is found

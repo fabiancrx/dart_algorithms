@@ -38,6 +38,7 @@ void main() {
       test("detection", () {
         expect(hasCycle(tinyDirectedG), true);
         expect(hasCycle(tinyDirectedG2), true);
+        expect(hasCycle(tinyDirectedG3), false);
 
         final tinyGD = fromInput(loadTestFile("tinyG.txt"), directed: true);
         final sampleD = fromInput(loadTestFile("sample.txt"), directed: true);
@@ -83,6 +84,7 @@ void main() {
     group("Connected components", () {
       test("given a graph with 3 connected components they get correctly identified", () {
         final cc = ConnectedComponents(tinyG);
+
         expect(cc.count, 3);
 
         expect(cc.connected(0, 6), true);

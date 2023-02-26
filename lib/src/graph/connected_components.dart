@@ -27,7 +27,6 @@ class ConnectedComponents<T extends Object> {
     if (!_graph.directed) {
       _connectedComponent(_graph.vertices);
     } else {
-
       _tarjanStronglyConnectedComponents();
     }
   }
@@ -42,12 +41,14 @@ class ConnectedComponents<T extends Object> {
           visited: visited,
           onVisited: (n) {
             _componentId[n] = _count;
+            visited[n] = true;
           },
         );
         _count++;
       }
     }
   }
+
   /// O(V+E) it performs 2 DFS, one in the reversed graph.
   /// And a second one on the topologically sorted vertices.
   void _kosarajuStronglyConnectedComponents() {
