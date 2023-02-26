@@ -13,6 +13,7 @@ extension IterableSwapX<T> on List<T> {
   }
 }
 
+
 /// Greatest common divisor
 int gcd(int a, int b) => b == 0 ? a : gcd(b, a % b);
 

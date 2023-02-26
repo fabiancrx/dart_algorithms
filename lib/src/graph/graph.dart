@@ -102,6 +102,8 @@ class AdjacencyListGraph<T> implements Graph<T> {
 }
 
 abstract class WeightedGraph<V> {
+   bool get directed;
+
   Set<WeightedEdge<V>> get allEdges;
 
   Set<V> get vertices;

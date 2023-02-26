@@ -3,6 +3,7 @@ Flood fill
 
 Is a graph bipartite
 Eulerian tour
+k clustering using kruskal's algorithm
 ++ hard
 Tarjan algorithm (lay out graph without crossing edges)
 Hamiltonian cycle

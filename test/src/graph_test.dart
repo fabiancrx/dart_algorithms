@@ -4,7 +4,9 @@ import "package:dart_algorithms/src/graph/cycle_detection.dart";
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
 import "package:dart_algorithms/src/graph/minimum_spanning_tree.dart";
+import "package:dart_algorithms/src/graph/shortest_path.dart";
 import "package:dart_algorithms/src/graph/topological_sort.dart";
+import "package:collection/collection.dart";
 import "package:test/test.dart";
 import "fixtures/fixtures.dart";
 
@@ -136,6 +138,29 @@ void main() {
       test("Prim", () {
         // ignore: prefer_int_literals
         expect(prim(tinyEWG).fold(0.0, (a, b) => a + b.weight), 1.81);
+      });
+    });
+
+    group("Shortest Path", () {
+      final tinyEWDG = fromInputWeighted(loadTestFile("tinyEWDG.txt"));
+
+      test("Dijkstra", () {
+        final pathWeights = [0, 1.05, 0.26, 0.99, 0.38, 0.73, 1.51, 0.60];
+        final shortestPaths = <int, List<int>>{
+          0: [0],
+          1: [0, 4, 5, 1],
+          2: [0, 2],
+          3: [0, 2, 7, 3],
+          4: [0, 4],
+          5: [0, 4, 5],
+          6: [0, 2, 7, 3, 6],
+          7: [0, 2, 7],
+        };
+        final sp = dijkstra(tinyEWDG, from: 0);
+        for (final vertex in tinyEWDG.vertices) {
+          expect(sp.cost[vertex], closeTo(pathWeights[vertex], 0.01));
+          expect(sp.minPath(vertex), shortestPaths[vertex]);
+        }
       });
     });
   });
