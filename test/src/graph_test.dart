@@ -156,7 +156,7 @@ void main() {
           6: [0, 2, 7, 3, 6],
           7: [0, 2, 7],
         };
-        final sp = dijkstra(tinyEWDG, from: 0);
+        final sp = dijkstra(tinyEWDG, source: 0);
         for (final vertex in tinyEWDG.vertices) {
           expect(sp.cost[vertex], closeTo(pathWeights[vertex], 0.01));
           expect(sp.minPath(vertex), shortestPaths[vertex]);

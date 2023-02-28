@@ -20,13 +20,20 @@ class ShortestPathResult<T> {
   }
 }
 
-ShortestPathResult<T> dijkstra<T>(WeightedGraph<T> graph, {required T from, T? to}) {
-  final pq = PriorityQueue<T>();
+// E log V
+//Nearly linear-time when weights are non-negative
+/// Returns the shortest path from [source] to all other edges of a given [graph] with non negative weights.
+/// It does so in O(E*log V) time and O(V) space.
+ShortestPathResult<T> dijkstra<T>(WeightedGraph<T> graph, {required T source, T? sink}) {
+  // Book keeping
   final cost = Map<T, num>.fromIterable(graph.vertices, value: (_) => double.infinity);
+  int compareByCost(T a, T b) =>
+      (cost[a] ?? double.infinity).compareTo(cost[b] ?? double.infinity);
+  final pq = PriorityQueue<T>(compareByCost);
   final prev = <T, T>{};
-  //
-  cost[from] = 0;
-  pq.add(from);
+  
+  cost[source] = 0;
+  pq.add(source);
 
   while (pq.isNotEmpty) {
     final vertex = pq.removeFirst();
@@ -43,5 +50,5 @@ ShortestPathResult<T> dijkstra<T>(WeightedGraph<T> graph, {required T from, T? t
     }
   }
 
-  return ShortestPathResult(from, cost, prev);
+  return ShortestPathResult(source, cost, prev);
 }

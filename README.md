@@ -68,6 +68,7 @@ For any graph given v vertices and e edges:
 - [x] Topological Sort
 - [x] Cycle detection
 - [x] Strongly connected components (SCC)
+- [x] Dijkstra
 
 | Algorithm        | Running time | Extra space | 
 |------------------|--------------|-------------|
