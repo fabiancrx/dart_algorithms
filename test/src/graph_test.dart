@@ -130,6 +130,7 @@ void main() {
 
     group("Minimum Spanning Trees", () {
       final tinyEWG = fromInputWeighted(loadTestFile("tinyEWG.txt"));
+      final tinyEWGnc = fromInputWeighted(loadTestFile("tinyEWGnc.txt"));
 
       test("Kruskal", () {
         // ignore: prefer_int_literals
@@ -143,24 +144,42 @@ void main() {
 
     group("Shortest Path", () {
       final tinyEWDG = fromInputWeighted(loadTestFile("tinyEWDG.txt"));
-
-      test("Dijkstra", () {
-        final pathWeights = [0, 1.05, 0.26, 0.99, 0.38, 0.73, 1.51, 0.60];
-        final shortestPaths = <int, List<int>>{
-          0: [0],
-          1: [0, 4, 5, 1],
-          2: [0, 2],
-          3: [0, 2, 7, 3],
-          4: [0, 4],
-          5: [0, 4, 5],
-          6: [0, 2, 7, 3, 6],
-          7: [0, 2, 7],
-        };
+      final tinyEWDGnc = fromInputWeighted(loadTestFile("tinyEWDGnc.txt"));
+      final pathWeights = [0, 1.05, 0.26, 0.99, 0.38, 0.73, 1.51, 0.60];
+      final shortestPaths = <int, List<int>>{
+        0: [0],
+        1: [0, 4, 5, 1],
+        2: [0, 2],
+        3: [0, 2, 7, 3],
+        4: [0, 4],
+        5: [0, 4, 5],
+        6: [0, 2, 7, 3, 6],
+        7: [0, 2, 7],
+      };
+      test("Dijkstra calculates the single source shortest path correctly", () {
         final sp = dijkstra(tinyEWDG, source: 0);
         for (final vertex in tinyEWDG.vertices) {
           expect(sp.cost[vertex], closeTo(pathWeights[vertex], 0.01));
           expect(sp.minPath(vertex), shortestPaths[vertex]);
         }
+      });
+
+      test("Dijkstra throws exception when graph has negative weight", () {
+        final tinyEWDG = fromInputWeighted(loadTestFile("tinyEWDG.txt"))..addEdge(WeightedEdge(0, 1, weight: -3));
+
+        expect(() => dijkstra(tinyEWDG, source: 0), throwsException);
+        expect(() => dijkstra(tinyEWDGnc, source: 0), throwsException);
+      });
+      test("Bellman-Ford calculates the single source shortest path correctly", () {
+        final sp = bellmanFord(tinyEWDG, source: 0);
+        for (final vertex in tinyEWDG.vertices) {
+          expect(sp.cost[vertex], closeTo(pathWeights[vertex], 0.01));
+          expect(sp.minPath(vertex), shortestPaths[vertex]);
+        }
+      });
+      test("Bellman-Ford throws exception when graph has negative cycle", () {
+
+        expect(() => dijkstra(tinyEWDGnc, source: 0), throwsException);
       });
     });
   });

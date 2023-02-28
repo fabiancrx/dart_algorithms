@@ -70,13 +70,15 @@ For any graph given v vertices and e edges:
 - [x] Strongly connected components (SCC)
 - [x] Dijkstra
 
-| Algorithm        | Running time | Extra space | 
-|------------------|--------------|-------------|
-| DFS              | O(v+e)       | O(v)        |
-| BFS              | O(v+e)       | O(v)        |
-| Topological sort | O(v+e)       | O(v)        |
-| SCC              | O(v+e)       | O(v)        |
-| Cycle detection  | O(v+e)       | O(v)        |
+| Algorithm        | Running time | Extra space | Notes                                  |
+|------------------|--------------|-------------|----------------------------------------|
+| DFS              | O(v+e)       | O(v)        |                                        |
+| BFS              | O(v+e)       | O(v)        |                                        |
+| Topological sort | O(v+e)       | O(v)        | No directed cycles                     |
+| SCC              | O(v+e)       | O(v)        |                                        |
+| Cycle detection  | O(v+e)       | O(v)        |                                        |
+| Dijkstra         | O(E*logV)    | O(V)        | No negative weights or negative cycles |
+| Bellman-Ford     | O(E*V)       | O(V)        | No negative cycles                     |
 
 ---
 

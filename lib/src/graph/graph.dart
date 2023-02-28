@@ -35,6 +35,7 @@ abstract class Graph<T> {
 
 class AdjacencyListGraph<T> implements Graph<T> {
   final HashMap<T, Set<T>> _list = HashMap();
+  @override
   final bool directed;
 
   ///  Directed defines if the graph is a Digraph.
@@ -102,7 +103,8 @@ class AdjacencyListGraph<T> implements Graph<T> {
 }
 
 abstract class WeightedGraph<V> {
-   bool get directed;
+  bool get directed;
+  bool get hasNegativeWeight;
 
   Set<WeightedEdge<V>> get allEdges;
 
@@ -136,7 +138,10 @@ class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
 
 class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
   final HashMap<T, Set<WeightedEdge<T>>> _list = HashMap();
+  @override
   final bool directed;
+  @override
+  bool hasNegativeWeight = false;
 
   ///  Directed defines if the graph is a Digraph.
 
@@ -150,6 +155,9 @@ class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
   void addEdge(WeightedEdge<T> edge) {
     if (_list[edge.a] == null || _list[edge.b] == null) {
       throw StateError("Can't add edge between two vertices that do not exist");
+    }
+    if(edge.weight<=0){
+      hasNegativeWeight=true;
     }
     _list[edge.a]!.add(edge);
     if (!directed) {
