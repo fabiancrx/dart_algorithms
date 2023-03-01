@@ -1,33 +1,57 @@
-import "dart:collection";
-
-import 'package:collection/collection.dart';
+import "package:collection/collection.dart" show PriorityQueue;
 import "package:dart_algorithms/src/graph/graph.dart";
 
+/// Represents the shortest paths from [source] to all other vertices on a graph.
+/// You can query it to retrieve an iterable with the shortest path to any vertex.
+/// Or the minimum cost.
+/// ```
+/// final result=dijkstra(graph,source:0);
+///
+/// result.shortestPath(7);//[0,2,7]
+/// result.minimumCost(7);// 0.6
+///
+/// ```
 class ShortestPathResult<T> {
-  final Map<T, num> cost;
+  final Map<T, num> _cost;
   final Map<T, T> _previous;
+
+  /// The starting vertex from which the shortest path was computed.
   final T source;
 
-  ShortestPathResult(this.source, this.cost, this._previous);
+  /// Creates an object representing the result of running a "Single [source] shortest path" algorithm.
+  /// [_cost] is a map between a vertex and the minimum cost to reach it.
+  /// [_previous] is a map in which the key is the target vertex and the value the previous vertex in the shortest path
+  /// to the key.
+  ShortestPathResult(this.source, this._cost, this._previous);
 
-  Iterable<T> minPath(T end) {
-    final output = <T>[end];
-    var current = end;
+  /// Returns an iterable containing the vertices with the shortest path from [source] to [sink]
+  Iterable<T> shortestPath(T sink) {
+    final output = <T>[sink];
+    var current = sink;
     while (current != source) {
-      final previous = _previous[current]!;
+      final previous = _previous[current] as T;
       output.insert(0, previous);
       current = previous;
     }
     return output;
   }
+
+  /// Minimum cost of traversing from [source] to [vertex]
+  num cost(T vertex) {
+    if (_cost.containsKey(vertex)) return _cost[vertex]!;
+    throw Exception("Vertex $vertex is not found ");
+  }
 }
 
-// E log V
-//Nearly linear-time when weights are non-negative
+/// Dijkstra’s algorithm is a Greedy algorithm
 /// Returns the shortest path from [source] to all other edges of a given [graph] with non negative weights.
 /// It does so in O(E*log V) time and O(V) space.
-ShortestPathResult<T> dijkstra<T>(WeightedGraph<T> graph, {required T source, T? sink}) {
-  if(graph.hasNegativeWeight) throw Exception("Can't calculate shortest path on a graph with negative weight");
+ShortestPathResult<T> dijkstra<T>(
+  WeightedGraph<T> graph, {
+  required T source,
+}) {
+  // pre condition
+  if (graph.hasNegativeWeight) throw Exception("Can't calculate shortest path on a graph with negative weight");
 
   // Book keeping
   final cost = Map<T, num>.fromIterable(graph.vertices, value: (_) => double.infinity);
@@ -56,82 +80,46 @@ ShortestPathResult<T> dijkstra<T>(WeightedGraph<T> graph, {required T source, T?
   return ShortestPathResult(source, cost, prev);
 }
 
+/// Performs the Bellman Ford algorithm to get the shortest paths from [source] to
+/// all vertices. The [graph] is required to not have negative cycles and will raise an exception if one is found.
 ShortestPathResult<T> bellmanFord<T>(WeightedGraph<T> graph, {required T source}) {
+  // Book keeping
   final pq = PriorityQueue<T>();
   final cost = Map<T, num>.fromIterable(graph.vertices, value: (_) => double.infinity);
   final onQ = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
   final prev = <T, T>{};
-  //
+
   cost[source] = 0;
   pq.add(source);
   onQ[source] = true;
 
   bool hasNegativeCycle() {
     for (final edge in graph.allEdges) {
-      if (cost[edge.a] != double.infinity && cost[edge.a]! + edge.weight < cost[edge.b]!) {
+      final previousVertex = edge.a;
+      final current = edge.b;
+      final newWeight = cost[previousVertex]! + edge.weight;
+
+      if (newWeight < (cost[current] ?? double.infinity)) {
         return true;
       }
     }
     return false;
   }
 
-  while (pq.isNotEmpty) {
-    final v = pq.removeFirst();
-    onQ[v] = false;
-    for (final e in graph.edges(v)) {
-      final w = e.b;
-      if (cost[w]! > cost[v]! + e.weight) {
-        cost[w] = cost[v]! + e.weight;
-        prev[w] = v;
-        if (!onQ[w]!) {
-          pq.add(w);
-          onQ[w] = true;
-        }
+  final allEdges = graph.allEdges;
+  for (var i = 1; i < graph.vertices.length; i++) {
+    for (final edge in allEdges) {
+      final previousVertex = edge.a;
+      final current = edge.b;
+      final newWeight = cost[previousVertex]! + edge.weight;
+
+      if (newWeight < (cost[current] ?? double.infinity)) {
+        cost[current] = newWeight;
+        prev[current] = previousVertex;
       }
     }
   }
 
   if (hasNegativeCycle()) throw Exception("Negative cycle detected");
   return ShortestPathResult(source, cost, prev);
-}
-
-/// Run the Bellman Ford algorithm to get the shortest paths from [source] to
-/// all vertices.
-///
-/// Dijkstra’s algorithm is a Greedy algorithm and the time complexity is O((V+E)LogV)
-/// (with the use of the Fibonacci heap). Dijkstra doesn’t work for Graphs with negative weights,
-/// Bellman-Ford works for such graphs. Bellman-Ford is also simpler than Dijkstra and suites
-/// well for distributed systems. But time complexity of Bellman-Ford is O(V * E), which is more than Dijkstra.
-HashMap<T, num>? bellmanFord2<T>(WeightedGraph<T> graph, T source) {
-  var distances = HashMap<T, num>();
-  distances[source] = 0;
-
-  var edges = graph.edges;
-  var counter = graph.vertices.length - 1;
-
-  bool shouldUpdate(WeightedEdge<T> edge) {
-    if (!distances.containsKey(edge.a)) return false;
-    var uValue = distances[edge.a]!;
-    var vValue = distances[edge.b] ?? (uValue + edge.weight + 1);
-
-    return uValue + edge.weight < vValue;
-  }
-
-  while (counter > 0) {
-    for (var edge in graph.allEdges) {
-      if (shouldUpdate(edge)) {
-        distances[edge.a] = distances[edge.b]! + edge.weight;
-      }
-    }
-
-    counter--;
-  }
-
-  for (var edge in graph.allEdges) {
-    if (shouldUpdate(edge)) {
-      return null;
-    }
-  }
-
-  return distances;
 }

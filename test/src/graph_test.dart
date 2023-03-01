@@ -6,24 +6,17 @@ import "package:dart_algorithms/src/graph/graph.dart";
 import "package:dart_algorithms/src/graph/minimum_spanning_tree.dart";
 import "package:dart_algorithms/src/graph/shortest_path.dart";
 import "package:dart_algorithms/src/graph/topological_sort.dart";
-import "package:collection/collection.dart";
 import "package:test/test.dart";
 import "fixtures/fixtures.dart";
 
 void main() {
-  late final Graph<int> tinyG;
-  late final Graph<int> tinyDirectedG;
-  late final Graph<int> tinyDirectedG2;
-  late final Graph<int> tinyDirectedG3;
-  late final Graph<int> sample;
+  late final tinyG = fromInput(loadTestFile("tinyG.txt"));
+  late final sample = fromInput(loadTestFile("sample.txt"));
+  late final tinyDirectedG = fromInput(loadTestFile("tinyDG.txt"), directed: true);
+  late final tinyDirectedG2 = fromInput(loadTestFile("tinyDG2.txt"), directed: true);
+  late final tinyDirectedG3 = fromInput(loadTestFile("tinyDG3.txt"), directed: true);
+  late final tinyEWG = fromInputWeighted(loadTestFile("tinyEWG.txt"));
 
-  setUpAll(() {
-    tinyG = fromInput(loadTestFile("tinyG.txt"));
-    sample = fromInput(loadTestFile("sample.txt"));
-    tinyDirectedG = fromInput(loadTestFile("tinyDG.txt"), directed: true);
-    tinyDirectedG2 = fromInput(loadTestFile("tinyDG2.txt"), directed: true);
-    tinyDirectedG3 = fromInput(loadTestFile("tinyDG3.txt"), directed: true);
-  });
   group("Graph ", () {
     test(" is correctly constructed when directed", () {
       expect(tinyDirectedG.degree(7), 2);
@@ -36,8 +29,8 @@ void main() {
       expect(dfs(tinyDirectedG, 0), unorderedEquals([0, 1, 2, 3, 4, 5]));
     });
 
-    group("cycle ", () {
-      test("detection", () {
+    group("Cycle ", () {
+      test("is correctly detected in case of existence", () {
         expect(hasCycle(tinyDirectedG), true);
         expect(hasCycle(tinyDirectedG2), true);
         expect(hasCycle(tinyDirectedG3), false);
@@ -51,7 +44,7 @@ void main() {
         expect(hasCycle(selfLoop), true);
       });
 
-      test("listing", () {
+      test("first cycle found is correctly listed", () {
         final selfLoop = fromInput(loadTestFile("selfLoop.txt"), directed: true);
         expect(findCycle(selfLoop), [0, 0]);
         expect(
@@ -129,9 +122,6 @@ void main() {
     });
 
     group("Minimum Spanning Trees", () {
-      final tinyEWG = fromInputWeighted(loadTestFile("tinyEWG.txt"));
-      final tinyEWGnc = fromInputWeighted(loadTestFile("tinyEWGnc.txt"));
-
       test("Kruskal", () {
         // ignore: prefer_int_literals
         expect(kruskal(tinyEWG).fold(0.0, (a, b) => a + b.weight), 1.81);
@@ -142,9 +132,11 @@ void main() {
       });
     });
 
-    group("Shortest Path", () {
+    group("Single source shortest Path", () {
       final tinyEWDG = fromInputWeighted(loadTestFile("tinyEWDG.txt"));
       final tinyEWDGnc = fromInputWeighted(loadTestFile("tinyEWDGnc.txt"));
+      final tinyEWDGnw = fromInputWeighted(loadTestFile("tinyEWDGnw.txt"));
+
       final pathWeights = [0, 1.05, 0.26, 0.99, 0.38, 0.73, 1.51, 0.60];
       final shortestPaths = <int, List<int>>{
         0: [0],
@@ -159,8 +151,8 @@ void main() {
       test("Dijkstra calculates the single source shortest path correctly", () {
         final sp = dijkstra(tinyEWDG, source: 0);
         for (final vertex in tinyEWDG.vertices) {
-          expect(sp.cost[vertex], closeTo(pathWeights[vertex], 0.01));
-          expect(sp.minPath(vertex), shortestPaths[vertex]);
+          expect(sp.cost(vertex), closeTo(pathWeights[vertex], 0.01));
+          expect(sp.shortestPath(vertex), shortestPaths[vertex]);
         }
       });
 
@@ -173,13 +165,20 @@ void main() {
       test("Bellman-Ford calculates the single source shortest path correctly", () {
         final sp = bellmanFord(tinyEWDG, source: 0);
         for (final vertex in tinyEWDG.vertices) {
-          expect(sp.cost[vertex], closeTo(pathWeights[vertex], 0.01));
-          expect(sp.minPath(vertex), shortestPaths[vertex]);
+          expect(sp.cost(vertex), closeTo(pathWeights[vertex], 0.01));
+          expect(sp.shortestPath(vertex), shortestPaths[vertex]);
+        }
+      });
+
+      test("Bellman-Ford calculates the shortest path when a graph has negative weights", () {
+        final pathWeights = [0, -1, 2, -2, 1];
+        final sp = bellmanFord(tinyEWDGnw, source: 0);
+        for (final vertex in tinyEWDGnw.vertices) {
+          expect(sp.cost(vertex), pathWeights[vertex]);
         }
       });
       test("Bellman-Ford throws exception when graph has negative cycle", () {
-
-        expect(() => dijkstra(tinyEWDGnc, source: 0), throwsException);
+        expect(() => bellmanFord(tinyEWDGnc, source: 0), throwsException);
       });
     });
   });

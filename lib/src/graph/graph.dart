@@ -2,6 +2,7 @@ import "dart:collection";
 
 /// Represents a graph data structure
 abstract class Graph<T> {
+  /// If true the graph edges are directed
   bool get directed;
 
   Graph(Iterable<T> vertices);
@@ -33,6 +34,10 @@ abstract class Graph<T> {
   Graph<T> reversed();
 }
 
+///{@template adj_list}
+/// Graph representation backed by an adjacency list. It requires O(v+e) space and is better suited for sparse graphs
+///{@endtemplate}
+// Most graphs in practice are sparse
 class AdjacencyListGraph<T> implements Graph<T> {
   final HashMap<T, Set<T>> _list = HashMap();
   @override
@@ -102,25 +107,39 @@ class AdjacencyListGraph<T> implements Graph<T> {
   }
 }
 
+/// A graph representation in which edges have weight.
 abstract class WeightedGraph<V> {
+  /// If true the graph is directed
   bool get directed;
+
+  /// Whether any edge has negative weight.
   bool get hasNegativeWeight;
 
+  /// Returns a set of all edges in the graph
   Set<WeightedEdge<V>> get allEdges;
 
+  /// Set of all vertices in the graph
   Set<V> get vertices;
 
+  /// Given a [vertex] it returns all the its edges  to other vertices
   Set<WeightedEdge<V>> edges(V vertex);
 
+  /// Adds an [edge] to the graph. May throw an exception if any of its vertices do not exist.
   void addEdge(WeightedEdge<V> edge);
 }
 
+/// Represents an edge between vertices of a graph that is weighted connecting vertices [a] and [b]
 class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
+  /// First vertex connected by the edge. If the graph is directed this is the source vertex.
   final T a;
+
+  /// Second vertex connected by the edge. If the graph is directed this is the target vertex.
   final T b;
 
+  /// Weight of the edge
   final num weight;
 
+  /// Constructs an edge between vertex [a] and [b] with weight [weight](zero if omited)
   WeightedEdge(this.a, this.b, {this.weight = 0});
 
   @override
@@ -129,6 +148,7 @@ class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
   @override
   String toString() => "$a--[$weight]--$b";
 
+  /// Given a vertex [x] return the other vertex in the edge. If [x] is not part of the edge an exception is thrown
   T other(T x) {
     if (x == a) return b;
     if (x == b) return a;
@@ -136,6 +156,7 @@ class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
   }
 }
 
+///{@macro adj_list}
 class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
   final HashMap<T, Set<WeightedEdge<T>>> _list = HashMap();
   @override
@@ -156,8 +177,8 @@ class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
     if (_list[edge.a] == null || _list[edge.b] == null) {
       throw StateError("Can't add edge between two vertices that do not exist");
     }
-    if(edge.weight<=0){
-      hasNegativeWeight=true;
+    if (edge.weight <= 0) {
+      hasNegativeWeight = true;
     }
     _list[edge.a]!.add(edge);
     if (!directed) {

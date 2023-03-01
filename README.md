@@ -69,6 +69,7 @@ For any graph given v vertices and e edges:
 - [x] Cycle detection
 - [x] Strongly connected components (SCC)
 - [x] Dijkstra
+- [x] Bellman-Ford
 
 | Algorithm        | Running time | Extra space | Notes                                  |
 |------------------|--------------|-------------|----------------------------------------|

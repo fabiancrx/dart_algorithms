@@ -15,8 +15,10 @@ import "package:dart_algorithms/src/utils.dart";
 //
 // If we limit the size of the heap to N, we could ob
 class PriorityQueue<E> {
+  /// Creates a Priority Queue with a custom [comparator] function
   PriorityQueue([this.comparator = defaultCompare]);
 
+  /// Function used to compare objects in the priority queue
   final Comparator<E> comparator;
   final List<E?> _data = [];
 

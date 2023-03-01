@@ -29,6 +29,7 @@ List<T> findCycle<T>(Graph<T> graph) {
       }
       onStack.remove(neighbour);
     }
+    return null;
   }
 
   for (final vertex in graph.vertices) {
