@@ -107,8 +107,7 @@ class AdjacencyListGraph<T> implements Graph<T> {
   }
 }
 
-/// A graph representation in which edges have weight.
-abstract class WeightedGraph<V> {
+abstract class EdgeWeightedGraph<V, E extends WeightedEdge<V>> {
   /// If true the graph is directed
   bool get directed;
 
@@ -122,11 +121,13 @@ abstract class WeightedGraph<V> {
   Set<V> get vertices;
 
   /// Given a [vertex] it returns all the its edges  to other vertices
-  Set<WeightedEdge<V>> edges(V vertex);
+  Set<E> edges(V vertex);
 
   /// Adds an [edge] to the graph. May throw an exception if any of its vertices do not exist.
-  void addEdge(WeightedEdge<V> edge);
+  void addEdge(E edge);
 }
+
+typedef WeightedGraph<V> = EdgeWeightedGraph<V, WeightedEdge<V>>;
 
 /// Represents an edge between vertices of a graph that is weighted connecting vertices [a] and [b]
 class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
@@ -157,8 +158,8 @@ class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
 }
 
 ///{@macro adj_list}
-class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
-  final HashMap<T, Set<WeightedEdge<T>>> _list = HashMap();
+class AdjacencyListWeightedGraph<T, E extends WeightedEdge<T>> implements EdgeWeightedGraph<T,E> {
+  final HashMap<T, Set<E>> _list = HashMap();
   @override
   final bool directed;
   @override
@@ -173,7 +174,7 @@ class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
   }
 
   @override
-  void addEdge(WeightedEdge<T> edge) {
+  void addEdge(E edge) {
     if (_list[edge.a] == null || _list[edge.b] == null) {
       throw StateError("Can't add edge between two vertices that do not exist");
     }
@@ -198,13 +199,13 @@ class AdjacencyListWeightedGraph<T> implements WeightedGraph<T> {
   int degree(T vertex) => _list[vertex]?.length ?? -1;
 
   @override
-  Set<WeightedEdge<T>> edges(T vertex) {
+  Set<E> edges(T vertex) {
     if (contains(vertex)) return _list[vertex]!;
     throw StateError("Error retrieving neighbours of vertex $vertex does not exist");
   }
 
   @override
-  Set<WeightedEdge<T>> get allEdges => _list.values.fold(<WeightedEdge<T>>{}, (prev, curr) => prev.union(curr));
+  Set<E> get allEdges => _list.values.fold(<E>{}, (prev, curr) => prev.union(curr));
 
   @override
   Set<T> get vertices => _list.keys.toSet();

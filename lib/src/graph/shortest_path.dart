@@ -84,8 +84,10 @@ ShortestPathResult<T> dijkstra<T>(
 /// all vertices. The [graph] is required to not have negative cycles and will raise an exception if one is found.
 ShortestPathResult<T> bellmanFord<T>(WeightedGraph<T> graph, {required T source}) {
   // Book keeping
-  final pq = PriorityQueue<T>();
   final cost = Map<T, num>.fromIterable(graph.vertices, value: (_) => double.infinity);
+  int compareByCost(T a, T b) => (cost[a] ?? double.infinity).compareTo(cost[b] ?? double.infinity);
+  final pq = PriorityQueue<T>(compareByCost);
+
   final onQ = Map<T, bool>.fromIterable(graph.vertices, value: (_) => false);
   final prev = <T, T>{};
 

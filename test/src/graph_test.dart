@@ -3,6 +3,7 @@ import "package:dart_algorithms/src/graph/connected_components.dart";
 import "package:dart_algorithms/src/graph/cycle_detection.dart";
 import "package:dart_algorithms/src/graph/dfs.dart";
 import "package:dart_algorithms/src/graph/graph.dart";
+import "package:dart_algorithms/src/graph/max_flow.dart";
 import "package:dart_algorithms/src/graph/minimum_spanning_tree.dart";
 import "package:dart_algorithms/src/graph/shortest_path.dart";
 import "package:dart_algorithms/src/graph/topological_sort.dart";
@@ -181,13 +182,34 @@ void main() {
         expect(() => bellmanFord(tinyEWDGnc, source: 0), throwsException);
       });
     });
+    test("Ford Fulkerson", () {
+      final tinyFN = fromInputFlow(loadTestFile("tinyFN.txt"));
+      final tinyFN2 = fromInputFlow(loadTestFile("tinyFN2.txt"));
+      final flowEdges = <FlowEdge<int>>[
+        FlowEdge(0, 2, capacity: 3, flow: 2),
+        FlowEdge(0, 1, capacity: 2, flow: 2),
+        FlowEdge(1, 4, capacity: 1, flow: 1),
+        FlowEdge(1, 3, capacity: 3, flow: 1),
+        FlowEdge(2, 3, capacity: 1, flow: 1),
+        FlowEdge(2, 4, capacity: 1, flow: 1),
+        FlowEdge(3, 5, capacity: 2, flow: 2),
+        FlowEdge(4, 5, capacity: 3, flow: 2),
+      ];
+      final result = edmondsKarp(tinyFN, source: 0, sink: 5);
+
+      expect(result.maxFlow, 4);
+      expect(tinyFN.allEdges, unorderedEquals(flowEdges));
+
+      expect(edmondsKarp(tinyFN2, source: 0, sink: 3).maxFlow, 200);
+    });
   });
 }
 
 WeightedGraph<int> fromInputWeighted(List<String> input, {bool directed = false}) {
   final vertices = int.parse(input.removeAt(0));
   final edges = input.removeAt(0);
-  final graph = AdjacencyListWeightedGraph(List.generate(vertices, (i) => i), directed: directed);
+  final graph =
+      AdjacencyListWeightedGraph<int, WeightedEdge<int>>(List.generate(vertices, (i) => i), directed: directed);
 
   for (final edge in input) {
     final s = edge.split(" ");
@@ -195,6 +217,21 @@ WeightedGraph<int> fromInputWeighted(List<String> input, {bool directed = false}
     final b = int.parse(s[1]);
     final weight = num.parse(s.last);
     graph.addEdge(WeightedEdge(a, b, weight: weight));
+  }
+  return graph;
+}
+
+FlowWeightedGraph<int> fromInputFlow(List<String> input, {bool directed = false}) {
+  final vertices = int.parse(input.removeAt(0));
+  final edges = input.removeAt(0);
+  final graph = AdjacencyListWeightedGraph<int, FlowEdge<int>>(List.generate(vertices, (i) => i), directed: directed);
+
+  for (final edge in input) {
+    final s = edge.split(" ");
+    final a = int.parse(s.first);
+    final b = int.parse(s[1]);
+    final weight = num.parse(s.last);
+    graph.addEdge(FlowEdge(a, b, capacity: weight));
   }
   return graph;
 }

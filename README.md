@@ -56,7 +56,7 @@ For any graph given v vertices and e edges:
 | Neighbours               | O(v)             | O(deg(v))      |
 | Space required           | O(v²)            | O(v+e)         |
 
->Degree(deg): The number of adjacent vertices of a given vertex.
+> Degree(deg): The number of adjacent vertices of a given vertex.
 
 > Note
 > Real-world graphs tend to be sparse so an adjacency list is most commonly used.
@@ -70,16 +70,19 @@ For any graph given v vertices and e edges:
 - [x] Strongly connected components (SCC)
 - [x] Dijkstra
 - [x] Bellman-Ford
+- [x] Edmonds-Karp
+- [ ] A*
 
-| Algorithm        | Running time | Extra space | Notes                                  |
-|------------------|--------------|-------------|----------------------------------------|
-| DFS              | O(v+e)       | O(v)        |                                        |
-| BFS              | O(v+e)       | O(v)        |                                        |
-| Topological sort | O(v+e)       | O(v)        | No directed cycles                     |
-| SCC              | O(v+e)       | O(v)        |                                        |
-| Cycle detection  | O(v+e)       | O(v)        |                                        |
-| Dijkstra         | O(E*logV)    | O(V)        | No negative weights or negative cycles |
-| Bellman-Ford     | O(E*V)       | O(V)        | No negative cycles                     |
+| Algorithm        | Running time | Extra space | Notes                                                     |
+|------------------|--------------|-------------|-----------------------------------------------------------|
+| DFS              | O(v+e)       | O(v)        |                                                           |
+| BFS              | O(v+e)       | O(v)        |                                                           |
+| Topological sort | O(v+e)       | O(v)        | No directed cycles                                        |
+| SCC              | O(v+e)       | O(v)        |                                                           |
+| Cycle detection  | O(v+e)       | O(v)        |                                                           |
+| Dijkstra         | O(E*logV)    | O(V)        | No negative weights or negative cycles                    |
+| Bellman-Ford     | O(E*V)       | O(V)        | No negative cycles                                        |
+| Edmonds-Karp     | O(V*E²)      | O(V)        | Time complexity tightly coupled to implementation details |
 
 ---
 
@@ -101,7 +104,6 @@ genhtml coverage/lcov.info -o coverage/
 # Open Coverage Report
 open coverage/index.html
 ```
-
 
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 
