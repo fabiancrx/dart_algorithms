@@ -107,6 +107,9 @@ class AdjacencyListGraph<T> implements Graph<T> {
   }
 }
 
+/// {@template ewg}
+/// Graph in which its edges have a weight.
+/// {@endtemplate ewg}
 abstract class EdgeWeightedGraph<V, E extends WeightedEdge<V>> {
   /// If true the graph is directed
   bool get directed;
@@ -127,6 +130,7 @@ abstract class EdgeWeightedGraph<V, E extends WeightedEdge<V>> {
   void addEdge(E edge);
 }
 
+///{@macro ewg}
 typedef WeightedGraph<V> = EdgeWeightedGraph<V, WeightedEdge<V>>;
 
 /// Represents an edge between vertices of a graph that is weighted connecting vertices [a] and [b]
@@ -158,7 +162,7 @@ class WeightedEdge<T> implements Comparable<WeightedEdge<T>> {
 }
 
 ///{@macro adj_list}
-class AdjacencyListWeightedGraph<T, E extends WeightedEdge<T>> implements EdgeWeightedGraph<T,E> {
+class AdjacencyListWeightedGraph<T, E extends WeightedEdge<T>> implements EdgeWeightedGraph<T, E> {
   final HashMap<T, Set<E>> _list = HashMap();
   @override
   final bool directed;
@@ -192,10 +196,9 @@ class AdjacencyListWeightedGraph<T, E extends WeightedEdge<T>> implements EdgeWe
     _list[a] = {};
   }
 
-  @override
   bool contains(T vertex) => _list[vertex] != null;
 
-  @override
+
   int degree(T vertex) => _list[vertex]?.length ?? -1;
 
   @override

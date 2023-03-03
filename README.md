@@ -73,16 +73,16 @@ For any graph given v vertices and e edges:
 - [x] Edmonds-Karp
 - [ ] A*
 
-| Algorithm        | Running time | Extra space | Notes                                                     |
-|------------------|--------------|-------------|-----------------------------------------------------------|
-| DFS              | O(v+e)       | O(v)        |                                                           |
-| BFS              | O(v+e)       | O(v)        |                                                           |
-| Topological sort | O(v+e)       | O(v)        | No directed cycles                                        |
-| SCC              | O(v+e)       | O(v)        |                                                           |
-| Cycle detection  | O(v+e)       | O(v)        |                                                           |
-| Dijkstra         | O(E*logV)    | O(V)        | No negative weights or negative cycles                    |
-| Bellman-Ford     | O(E*V)       | O(V)        | No negative cycles                                        |
-| Edmonds-Karp     | O(V*E²)      | O(V)        | Time complexity tightly coupled to implementation details |
+| Algorithm        | Running time | Extra space | Notes                                           |
+|------------------|--------------|-------------|-------------------------------------------------|
+| DFS              | O(v+e)       | O(v)        |                                                 |
+| BFS              | O(v+e)       | O(v)        |                                                 |
+| Topological sort | O(v+e)       | O(v)        | Requires no directed cycles                     |
+| SCC              | O(v+e)       | O(v)        |                                                 |
+| Cycle detection  | O(v+e)       | O(v)        |                                                 |
+| Dijkstra         | O(E*logV)    | O(V)        | Requires no negative weights or negative cycles |
+| Bellman-Ford     | O(E*V)       | O(V)        | Requires no negative cycles                     |
+| Edmonds-Karp     | O(V*E²)      | O(V)        |                                                 |
 
 ---
 

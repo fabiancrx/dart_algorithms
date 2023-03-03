@@ -182,9 +182,10 @@ void main() {
         expect(() => bellmanFord(tinyEWDGnc, source: 0), throwsException);
       });
     });
-    test("Ford Fulkerson", () {
+    test("Maximum Flow : Edmonds-Karp correctly calculates the maximum flow for different flow networks", () {
       final tinyFN = fromInputFlow(loadTestFile("tinyFN.txt"));
       final tinyFN2 = fromInputFlow(loadTestFile("tinyFN2.txt"));
+      final tinyFN3 = fromInputFlow(loadTestFile("tinyFN3.txt"));
       final flowEdges = <FlowEdge<int>>[
         FlowEdge(0, 2, capacity: 3, flow: 2),
         FlowEdge(0, 1, capacity: 2, flow: 2),
@@ -201,6 +202,7 @@ void main() {
       expect(tinyFN.allEdges, unorderedEquals(flowEdges));
 
       expect(edmondsKarp(tinyFN2, source: 0, sink: 3).maxFlow, 200);
+      expect(edmondsKarp(tinyFN3, source: 0, sink: 7).maxFlow, 10);
     });
   });
 }
