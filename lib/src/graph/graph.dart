@@ -198,7 +198,6 @@ class AdjacencyListWeightedGraph<T, E extends WeightedEdge<T>> implements EdgeWe
 
   bool contains(T vertex) => _list[vertex] != null;
 
-
   int degree(T vertex) => _list[vertex]?.length ?? -1;
 
   @override
