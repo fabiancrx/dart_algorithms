@@ -79,8 +79,7 @@ void _merge<E>(
   final rightArray = List.generate(rightSize, (i) => arr[i + mid + 1]);
 
   for (var i = 0, j = 0, k = lo; k <= hi; k++) {
-    if ((i < leftSize) &&
-        (j >= rightSize || compare(leftArray[i], rightArray[j]) <= 0)) {
+    if ((i < leftSize) && (j >= rightSize || compare(leftArray[i], rightArray[j]) <= 0)) {
       arr[k] = leftArray[i];
       i++;
     } else {

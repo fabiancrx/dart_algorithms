@@ -1,4 +1,3 @@
-
 /// String matching algorithm which is used to find a pattern in a text with O(n) time complexity
 int knuthMorrisPratt(String needle, String haystack) {
   final n = haystack.length, m = needle.length;
