@@ -25,11 +25,9 @@ E? quickSelect<E>(
   if (partitionIndex == target) {
     return arr[target];
   } else if (partitionIndex > target) {
-    return quickSelect(arr, k,
-        lo: lo, hi: partitionIndex - 1, compare: compare);
+    return quickSelect(arr, k, lo: lo, hi: partitionIndex - 1, compare: compare);
   } else if (partitionIndex < target) {
-    return quickSelect(arr, k,
-        lo: partitionIndex + 1, hi: hi, compare: compare);
+    return quickSelect(arr, k, lo: partitionIndex + 1, hi: hi, compare: compare);
   }
   return null;
 }

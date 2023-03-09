@@ -56,13 +56,16 @@ class FlowEdge<T> extends WeightedEdge<T> {
   @override
   int get hashCode => flow.hashCode ^ a.hashCode ^ b.hashCode ^ weight.hashCode;
 }
+
 /// Represents the max flow result in a graph started at [source] and finishing at [sink]
 class MaxFlowMinCutResult<T> {
   /// The maximum flow in the network
   final num maxFlow;
   final Map<T, FlowEdge<T>> _previous;
+
   /// Vertex from which the maximum flow started
   final T source;
+
   /// Vertex to which the maximum flow is directed
   final T sink;
 
@@ -142,5 +145,5 @@ MaxFlowMinCutResult<T> _fordFulkerson<T>(FlowWeightedGraph<T> graph,
     // We have effectively augmented the flow in the graph by bottleneck
     value += bottleneck;
   }
-  return MaxFlowMinCutResult(value, prev,source,sink);
+  return MaxFlowMinCutResult(value, prev, source, sink);
 }
