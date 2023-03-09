@@ -2,15 +2,10 @@ import "package:dart_algorithms/src/kmp.dart";
 import "package:test/test.dart";
 
 void main() {
-  group("Union find", () {
+  group("String processing", () {
     test("Knuth Morris Pratt", () {
       for (final entry in solutions) {
         expect(knuthMorrisPratt(entry.first, entry.second), entry.third);
-      }
-    });
-    test("Rabin Karp", () {
-      for (final entry in solutions) {
-        expect(rabinKarp(entry.first, entry.second), entry.third);
       }
     });
   });
@@ -18,6 +13,7 @@ void main() {
 
 // We store our test results in tuples, by convention we store the needle, haystack and correct result
 const solutions = [
+  //needle, haystack, answer(needle starting index)
   _Triple("aaaaabc", "aaaaaabcb", 1),
   _Triple("aabdcaaabcdb", "aabdcaaabdcaaabcdba", 6),
   _Triple("needle", "inahaystackneedleina", 11),

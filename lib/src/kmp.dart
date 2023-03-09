@@ -1,11 +1,3 @@
-const samples = {
-  "aaaaabc": "aaaaaabcb",
-  "aabdcaaabcdb": "aabdcaaabdcaaabcdba",
-  "needle": "inahaystackneedleina",
-  "longer than the haystack": "banana",
-  "shortcircuit": "shortcircuit",
-  "": "shortcircuit",
-};
 
 /// String matching algorithm which is used to find a pattern in a text with O(n) time complexity
 int knuthMorrisPratt(String needle, String haystack) {
@@ -52,51 +44,4 @@ List<int> _constructLongestProperPrefix(String s) {
     }
   }
   return lps;
-}
-
-int rabinKarp(String pattern, String text, {int prime=911}) {
-  // Initializations
-  const d = 256;
-  final m = pattern.length;
-  final n = text.length;
-  var p = 0, t = 0, h = 1;
-  // Hash value calculation for pattern
-  for (var i = 0; i < m - 1; i++) {
-    h = (h * d) % prime;
-  }
-  // Hash value calculation for first substring in the text
-  for (var i = 0; i < m; i++) {
-    p = (d * p + pattern.codeUnitAt(i)) % prime;
-    t = (d * t + text.codeUnitAt(i)) % prime;
-  }
-
-  int j;
-  // Checking for matches in the text
-  for (var i = 0; i <= n - m; i++) {
-    if (p == t) {
-      for (j = 0; j < m; j++) {
-        if (text.codeUnitAt(i + j) != pattern.codeUnitAt(j)) {
-          break;
-        }
-      }
-      // Match found
-      if (j == m) {
-return i;
-      }
-    }
-    if (i < n - m) {
-      t = (d * (t - text.codeUnitAt(i) * h) + text.codeUnitAt(i + m)) % prime;
-      if (t < 0) {
-        t = t + prime;
-      }
-    }
-  }
-  return -1;
-}
-
-void main() {
-
-  for (final sample in samples.entries) {
-    print(knuthMorrisPratt(sample.key, sample.value));
-  }
 }

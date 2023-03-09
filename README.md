@@ -5,11 +5,10 @@
 A collection of Algorithms and Data structures implemented in dart.
 
 This repository is intended for educational purposes, you could probably find more optimized implementations of the data
-structures and algorithms here described in the standard library or in
-the [collections][https://pub.dev/packages/collection] package.
+structures and algorithms here described in the standard library or the [collections package][collections_package].
 
 Most of the implementations in this repository can be further studied in the
-book [Algorithms 4th edition][https://algs4.cs.princeton.edu/home/] .
+book [Algorithms 4th edition][algorithms_book] .
 
 ### Sorting
 
@@ -35,12 +34,12 @@ book [Algorithms 4th edition][https://algs4.cs.princeton.edu/home/] .
 
 - [x] Priority Queue
 - [x] Union Find
-- [ ] Binary Search Tree
 
 ### Algorithms
 
 - [x] Binary Search
 - [x] Quick Select
+- [x] Knuth-Morris-Pratt
 
 ### Graphs
 
@@ -48,7 +47,7 @@ book [Algorithms 4th edition][https://algs4.cs.princeton.edu/home/] .
 
 We represent graphs most commonly either with adjacency matrices or adjacency lists.
 
-For any graph given v vertices and e edges:
+For any graph given V vertices and E edges:
 
 | Operation/Representation | Adjacency Matrix | Adjacency List | 
 |--------------------------|------------------|----------------|
@@ -105,6 +104,7 @@ genhtml coverage/lcov.info -o coverage/
 open coverage/index.html
 ```
 
+[algorithms_book]: https://algs4.cs.princeton.edu/home/
+[collections_package]: https://pub.dev/packages/collection
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-
 [license_link]: https://opensource.org/licenses/MIT
