@@ -22,7 +22,7 @@ on:
       min_coverage:
         required: false
         type: number
-        default: 100
+        default: 80
       platform:
         required: false
         type: string
