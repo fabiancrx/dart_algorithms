@@ -40,6 +40,14 @@ book [Algorithms 4th edition][algorithms_book] .
 - [x] Binary Search
 - [x] Quick Select
 - [x] Knuth-Morris-Pratt
+- [x] Graham Scan (Convex Hull)
+
+| Algorithm          | Running time | Extra space | Notes                                   |
+|--------------------|--------------|-------------|-----------------------------------------|
+| Binary Search      | O(log(n))    | O(1)        | Search in ordered lists                 |
+| Quick Select       | O(n)         | O(1)        | kth element selection in unordered list |
+| Knuth-Morris-Pratt | O(n)         | O(n)        | String matching/searching               |
+| Graham Scan        | O(n*log(n))  | O(n)        | Convex hull                             |
 
 ### Graphs
 
@@ -67,10 +75,12 @@ For any graph given V vertices and E edges:
 - [x] Topological Sort
 - [x] Cycle detection
 - [x] Strongly connected components (SCC)
+    - Shortest paths
 - [x] Dijkstra
 - [x] Bellman-Ford
-- [x] Edmonds-Karp
 - [ ] A*
+    - Maximum Flow / Minimum Cut
+- [x] Edmonds-Karp
 
 | Algorithm        | Running time | Extra space | Notes                                           |
 |------------------|--------------|-------------|-------------------------------------------------|
@@ -105,6 +115,9 @@ open coverage/index.html
 ```
 
 [algorithms_book]: https://algs4.cs.princeton.edu/home/
+
 [collections_package]: https://pub.dev/packages/collection
+
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+
 [license_link]: https://opensource.org/licenses/MIT

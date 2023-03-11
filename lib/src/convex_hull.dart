@@ -29,7 +29,7 @@ num _manhattanDistance(Point a, Point b) {
 /// This particular implementation uses Graham's scan algorithm and has a complexity of O(n log n)
 List<Point> convexHull(List<Point> points) {
   var startIndex = 0;
-  // Select the starting point O(n)
+
   for (var i = 0; i < points.length; i++) {
     final current = points[i];
     // Select the point with the lowest y
@@ -40,7 +40,9 @@ List<Point> convexHull(List<Point> points) {
       startIndex = i;
     }
   }
+
   final startPoint = points[startIndex];
+
   points
     ..removeAt(startIndex)
     ..sort((a, b) {
